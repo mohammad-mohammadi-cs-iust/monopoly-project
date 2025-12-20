@@ -6,20 +6,18 @@ import re
 #import json
 import json
 
+#import os
+import os
+
 
 def check_email():
     regex = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,7}"
-
-    email=input("\n-please type your email address:").strip()
     
-    #check email validation
-
-    if(re.fullmatch(regex,email)):
-        return email
-    
-    else:
+    while True:
+        email = input("\n-please type your email address: ").strip()
+        if re.fullmatch(regex, email):
+            return email
         print("-Invalid email address, please type a valid email address !!.")
-        check_email()
 
 
 def create_user():
@@ -51,7 +49,7 @@ def create_user():
          else:
             bytes = password.encode('utf-8')
             salt = bcrypt.gensalt()
-            password = bcrypt.hashpw(bytes, salt)
+            password = bcrypt.hashpw(bytes, salt).decode('utf-8')
 
 
             unvalidpassword=False 
@@ -59,6 +57,23 @@ def create_user():
     #create user dictionary to dump to users.json
     user_info={'username':username,'email':email , 'password':password}
 
-    with open("users.json", mode="a", encoding="utf-8") as write_file:
-         json.dump(user_info, write_file)
+
+    BASE_DIR = os.path.dirname(__file__)
+    file_path = os.path.join(BASE_DIR, 'users.json')
+
+
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            try:
+                users = json.load(f)
+            except json.JSONDecodeError:
+                users = []
+    else:
+        users = []
+
+    users.append(user_info)
+
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump(users, f, indent=4)
+
 create_user()
