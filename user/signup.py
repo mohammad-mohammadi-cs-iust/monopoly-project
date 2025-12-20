@@ -9,6 +9,8 @@ import json
 #import os
 import os
 
+#import uuid
+import uuid
 
 def check_email():
     regex = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,7}"
@@ -54,8 +56,12 @@ def create_user():
 
             unvalidpassword=False 
 
+    #create a unique id for user using UUID4.
+
+    user_id = str(uuid.uuid4())
+
     #create user dictionary to dump to users.json
-    user_info={'username':username,'email':email , 'password':password}
+    user_info={'id':user_id,'username':username,'email':email , 'password':password}
 
 
     BASE_DIR = os.path.dirname(__file__)
