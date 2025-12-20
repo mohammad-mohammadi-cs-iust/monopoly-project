@@ -130,4 +130,21 @@ def create_user():
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(users, f, indent=4)
 
-create_user()
+
+
+
+while True:
+ create_user()
+
+ while True:
+   answer=input("\nDo you want to still continue? (yes/no):").strip()
+   if(answer=="yes" or answer=="no"):
+       break
+   else:
+       continue
+   
+ if(answer=="yes"):
+     break
+ 
+ else:
+     continue
