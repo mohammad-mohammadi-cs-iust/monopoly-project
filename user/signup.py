@@ -131,6 +131,13 @@ def create_user():
         json.dump(users, f, indent=4)
 
 
+def header_box(text, width=32):
+    print("\n")
+    print("*" * width)
+    print("*" + text.center(width - 2) + "*")
+    print("*" * width)
+
+header_box("SIGN UP")
 
 
 while True:
@@ -144,7 +151,7 @@ while True:
        continue
    
  if(answer=="yes"):
-     break
+     continue
  
  else:
-     continue
+     break
