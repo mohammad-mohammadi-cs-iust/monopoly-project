@@ -6,12 +6,31 @@ BASE_DIR = os.path.dirname(__file__)
 file_path = os.path.join(BASE_DIR, "users.json")
 
 
-def load_users():
+def load_users(address=file_path):
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(address, "r", encoding="utf-8") as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return []
+
+
+
+def insert_player(player_number, username):
+    users = load_users(os.path.join(BASE_DIR, "players.json"))
+
+    new_player = {
+        "player_number": player_number,
+        "username": username,
+        "money": 1500,
+        "assets": [],     
+        "position":1,
+        "prison":False
+    }
+
+    users.append(new_player)
+
+    with open(os.path.join(BASE_DIR, "players.json"), "w", encoding="utf-8") as f:
+        json.dump(users, f, indent=4, ensure_ascii=False)
 
 
 def find_username():
@@ -55,6 +74,7 @@ def login():
 
     username = find_username()
     if check_password(username):
+        insert_player(logged_in_player,username)
         print(f"User '{username}' with logged in successfully!")
 
 logged_in_player=1
