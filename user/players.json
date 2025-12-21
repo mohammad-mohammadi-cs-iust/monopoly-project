@@ -1,0 +1,34 @@
+[
+    {
+        "player_number": 1,
+        "username": "Newcastle",
+        "money": 1500,
+        "assets": [],
+        "position": 1,
+        "prison": false
+    },
+    {
+        "player_number": 2,
+        "username": "Newcastle2",
+        "money": 1500,
+        "assets": [],
+        "position": 1,
+        "prison": false
+    },
+    {
+        "player_number": 3,
+        "username": "Newcastle3",
+        "money": 1500,
+        "assets": [],
+        "position": 1,
+        "prison": false
+    },
+    {
+        "player_number": 4,
+        "username": "Newcastle4",
+        "money": 1500,
+        "assets": [],
+        "position": 1,
+        "prison": false
+    }
+]
