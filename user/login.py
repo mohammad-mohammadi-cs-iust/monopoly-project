@@ -135,16 +135,13 @@ else:
                     exit()
 
                 else:
-                    pass
+                    if logged_in_player == 5:
 
+                        players_path = os.path.join(BASE_DIR, "players.json")
 
-            if logged_in_player == 5:
+                        with open(players_path, "w", encoding="utf-8") as f:
+                            json.dump(players_buffer, f, indent=4, ensure_ascii=False)
 
-                players_path = os.path.join(BASE_DIR, "players.json")
-
-                with open(players_path, "w", encoding="utf-8") as f:
-                    json.dump(players_buffer, f, indent=4, ensure_ascii=False)
-
-                print("\nAll players logged in successfully!")
-                print("\nStarting new game...")
+                        print("\nAll players logged in successfully!")
+                        print("\nStarting new game...")
 
