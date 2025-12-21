@@ -5,6 +5,8 @@ import os
 BASE_DIR = os.path.dirname(__file__)
 file_path = os.path.join(BASE_DIR, "users.json")
 
+players_buffer = []
+
 
 def load_users(address=file_path):
     try:
@@ -33,12 +35,8 @@ def insert_player(player_number, username):
         "position":1,
         "prison":False
     }
-
-    users.append(new_player)
-
-
-    with open(players_path, "w", encoding="utf-8") as f:
-        json.dump(users, f, indent=4, ensure_ascii=False)
+    
+    players_buffer.append(new_player)
 
     return True 
 
@@ -117,4 +115,15 @@ else:
 
             if login():              
                 logged_in_player += 1 
+
+
+            if logged_in_player == 5:
+
+                players_path = os.path.join(BASE_DIR, "players.json")
+
+                with open(players_path, "w", encoding="utf-8") as f:
+                    json.dump(players_buffer, f, indent=4, ensure_ascii=False)
+
+                print("\nAll players logged in successfully!")
+                print("Players data saved to players.json")
 
