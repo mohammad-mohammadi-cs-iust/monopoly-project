@@ -141,17 +141,17 @@ header_box("SIGN UP")
 
 
 while True:
- create_user()
+    create_user()
 
- while True:
-   answer=input("\nDo you want to still continue? (yes/no):").strip()
-   if(answer=="yes" or answer=="no"):
-       break
-   else:
-       continue
-   
- if(answer=="yes"):
-     continue
- 
- else:
-     break
+    while True:
+        answer=input("\nDo you want to still continue? (yes/no):").strip()
+        if(answer=="yes" or answer=="no"):
+            break
+        else:
+            continue
+        
+    if(answer=="yes"):
+        continue
+
+    else:
+        break
