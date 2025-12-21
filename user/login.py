@@ -18,11 +18,8 @@ def load_users(address=file_path):
 
 
 def insert_player(player_number, username):
-    players_path=os.path.join(BASE_DIR, "players.json")
-    users = load_users(players_path)
 
-
-    for user in users:
+    for user in players_buffer:
         if user['username'] == username:
             print("This player has already logged in. Please add a new player.")
             return False  
@@ -109,8 +106,14 @@ if not (len(load_user)>=4):
     print("\nSorry, There should be at least 4 users to start the game. Please go to sign up and add 4 players to start the game.")
 
 else:
+
+    # reset players.json at game start
+    players_path = os.path.join(BASE_DIR, "players.json")
+    with open(players_path, "w", encoding="utf-8") as f:
+        json.dump([], f, indent=4, ensure_ascii=False)
+
         #run the programm
-        while logged_in_player != 5:
+    while logged_in_player != 5:
             header_box("Player " + str(logged_in_player))
 
             if login():              
@@ -125,5 +128,4 @@ else:
                     json.dump(players_buffer, f, indent=4, ensure_ascii=False)
 
                 print("\nAll players logged in successfully!")
-                print("Players data saved to players.json")
 
