@@ -57,5 +57,16 @@ def login():
     if check_password(username):
         print(f"User '{username}' with logged in successfully!")
 
+logged_in_player=1
 
-login()
+
+def header_box(text, width=32):
+    print("\n")
+    print("*" * width)
+    print("*" + text.center(width - 2) + "*")
+    print("*" * width)
+
+while logged_in_player!=5:
+    header_box("Player "+str(logged_in_player))
+    login()
+    logged_in_player+=1
