@@ -16,7 +16,14 @@ def load_users(address=file_path):
 
 
 def insert_player(player_number, username):
-    users = load_users(os.path.join(BASE_DIR, "players.json"))
+    players_path=os.path.join(BASE_DIR, "players.json")
+    users = load_users(players_path)
+
+
+    for user in users:
+        if user['username'] == username:
+            print("This player has already logged in. Please add a new player.")
+            return False  
 
     new_player = {
         "player_number": player_number,
@@ -29,8 +36,11 @@ def insert_player(player_number, username):
 
     users.append(new_player)
 
-    with open(os.path.join(BASE_DIR, "players.json"), "w", encoding="utf-8") as f:
+
+    with open(players_path, "w", encoding="utf-8") as f:
         json.dump(users, f, indent=4, ensure_ascii=False)
+
+    return True 
 
 
 def find_username():
@@ -70,12 +80,19 @@ def check_password(username):
 def login():
     if not os.path.exists(file_path):
         print("No users registered.")
-        return
+        return False
 
     username = find_username()
+
     if check_password(username):
-        insert_player(logged_in_player,username)
-        print(f"User '{username}' with logged in successfully!")
+
+        success = insert_player(logged_in_player, username)
+
+        if success:
+            print(f"User '{username}' logged in successfully!")
+            return True
+        else:
+            return False
 
 logged_in_player=1
 
@@ -86,7 +103,18 @@ def header_box(text, width=32):
     print("*" + text.center(width - 2) + "*")
     print("*" * width)
 
-while logged_in_player!=5:
-    header_box("Player "+str(logged_in_player))
-    login()
-    logged_in_player+=1
+
+#check if there is at least for 4 players in users.json
+load_user=load_users()
+
+if not (len(load_user)>=4):
+    print("\nSorry, There should be at least 4 users to start the game. Please go to sign up and add 4 players to start the game.")
+
+else:
+        #run the programm
+        while logged_in_player != 5:
+            header_box("Player " + str(logged_in_player))
+
+            if login():              
+                logged_in_player += 1 
+
