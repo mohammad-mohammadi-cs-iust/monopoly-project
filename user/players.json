@@ -5,7 +5,8 @@
         "money": 1500,
         "assets": [],
         "position": 1,
-        "prison": false
+        "prison": false,
+        "status": "In Progress"
     },
     {
         "player_number": 2,
@@ -13,7 +14,8 @@
         "money": 1500,
         "assets": [],
         "position": 1,
-        "prison": false
+        "prison": false,
+        "status": "In Progress"
     },
     {
         "player_number": 3,
@@ -21,7 +23,8 @@
         "money": 1500,
         "assets": [],
         "position": 1,
-        "prison": false
+        "prison": false,
+        "status": "In Progress"
     },
     {
         "player_number": 4,
@@ -29,6 +32,7 @@
         "money": 1500,
         "assets": [],
         "position": 1,
-        "prison": false
+        "prison": false,
+        "status": "In Progress"
     }
 ]
