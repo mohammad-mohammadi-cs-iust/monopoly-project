@@ -3,30 +3,35 @@
         "id": "cd5daded-0a6e-4bb2-bd58-c6c4c51529b3",
         "username": "Newcastle",
         "email": "amintsha.2007@gmail.com",
-        "password": "$2b$12$qoYEobC6wXEynq5Nx4fY3.3./o3UcQnTAVIKYijcgRNq0qXIpVREq"
+        "password": "$2b$12$qoYEobC6wXEynq5Nx4fY3.3./o3UcQnTAVIKYijcgRNq0qXIpVREq",
+        "point": 0
     },
     {
         "id": "6f2f8ebd-1998-4f85-909d-8b193e7c80fe",
         "username": "Newcastle2",
         "email": "amintaha.2007@gmail.com",
-        "password": "$2b$12$M98iETSX96FZRdX8RVrOz.QAS0K1WdAc07hJzoKu2Hm15Ob.1sQRK"
+        "password": "$2b$12$M98iETSX96FZRdX8RVrOz.QAS0K1WdAc07hJzoKu2Hm15Ob.1sQRK",
+        "point": 0
     },
     {
         "id": "bc132399-d6a3-4d50-806c-9d84b4904a28",
         "username": "Newcastle3",
         "email": "amintssga.2007@gmail.com",
-        "password": "$2b$12$dTPKuFFYo2/gAgusUdOBPuPciMgWZ75KRBi61UV2dyV8otAEzquPC"
+        "password": "$2b$12$dTPKuFFYo2/gAgusUdOBPuPciMgWZ75KRBi61UV2dyV8otAEzquPC",
+        "point":0
     },
     {
         "id": "9427b0a3-3983-46e9-831a-3e6f3e174ac3",
         "username": "Newcastle4",
         "email": "aminntaha.2007@gmail.com",
-        "password": "$2b$12$/9Hvdt/EsIZZWZEMsc0eIeJpQ4IT4p/NCpS5.fRhnCI0F7fWmUnIW"
+        "password": "$2b$12$/9Hvdt/EsIZZWZEMsc0eIeJpQ4IT4p/NCpS5.fRhnCI0F7fWmUnIW",
+        "point":0
     },
     {
         "id": "c91d84bf-ae77-44f0-84e3-f981851dfd2d",
         "username": "Taylor",
         "email": "taylor@gmail.com",
-        "password": "$2b$12$igBYQ3owWzFzHSN.XxmoX.2sn5xtXujjHQ0FRwUyKYUnNZRv1Q4IW"
+        "password": "$2b$12$igBYQ3owWzFzHSN.XxmoX.2sn5xtXujjHQ0FRwUyKYUnNZRv1Q4IW",
+        "point":0
     }
 ]
