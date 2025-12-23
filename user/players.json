@@ -1,4 +1,5 @@
 [
+    "In Progress",
     {
         "player_number": 1,
         "username": "Newcastle",
@@ -10,15 +11,6 @@
     },
     {
         "player_number": 2,
-        "username": "Taylor",
-        "money": 1500,
-        "assets": [],
-        "position": 1,
-        "prison": false,
-        "status": "In Progress"
-    },
-    {
-        "player_number": 3,
         "username": "Newcastle2",
         "money": 1500,
         "assets": [],
@@ -27,8 +19,17 @@
         "status": "In Progress"
     },
     {
-        "player_number": 4,
+        "player_number": 3,
         "username": "Newcastle4",
+        "money": 1500,
+        "assets": [],
+        "position": 1,
+        "prison": false,
+        "status": "In Progress"
+    },
+    {
+        "player_number": 4,
+        "username": "Taylor",
         "money": 1500,
         "assets": [],
         "position": 1,
