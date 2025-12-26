@@ -1,5 +1,6 @@
 [
     "In Progress",
+    {"current_turn": 1},
     {
         "player_number": 1,
         "username": "Newcastle",
