@@ -111,3 +111,7 @@ def sell_properties():
 
         else:
             continue
+
+
+def resolve_bankrupt():
+    pass
