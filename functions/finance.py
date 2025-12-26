@@ -37,26 +37,70 @@ def get_current_player():
 
 
 def sell_properties():
-    players, player, _ = get_current_player()
+    players, player, player_index = get_current_player()
     assets = load_assets()
 
     username = player["username"]
-
     print("\nHere are your assets that you can sell:\n")
 
-    has_any_asset = False
+    user_assets = {}
+    name_to_position = {}
 
     for position, asset in assets.items():
-
         if asset.get("owner") == username and "buy_price" in asset:
-
             buy_price = asset["buy_price"]
             sell_price = buy_price // 2
 
-            print(f"- Position {position} | {asset['name']} | "
-                  f"Buy price: {buy_price}$ | Sell price: {sell_price}$")
+            user_assets[asset["name"]] = sell_price
+            name_to_position[asset["name"]] = position
 
-            has_any_asset = True
+            print(
+                f"- Position {position} | {asset['name']} | "
+                f"Buy price: {buy_price}$ | Sell price: {sell_price}$"
+            )
 
-    if not has_any_asset:
+    if not user_assets:
         print("You don't own any assets to sell.")
+        return
+
+    while True:
+        print(f"\nCurrent Money: {player['money']}$")
+        prompt = input("Which one do you want to sell?: ").strip()
+
+        if prompt not in user_assets:
+            print("The property you typed is not in your assets. Please try again.")
+            continue
+
+        player["money"] += user_assets[prompt]
+
+        if prompt in player["assets"]:
+            player["assets"].remove(prompt)
+
+        position = name_to_position[prompt]
+        assets[position]["owner"] = ""
+
+        if "house_num" in assets[position]:
+            assets[position]["house_num"] = 0
+        if "hotel_num" in assets[position]:
+            assets[position]["hotel_num"] = 0
+
+
+        players[player_index] = player
+        save_players(players)
+        save_assets(assets)
+
+        print(f"\n✔ You sold {prompt} for {user_assets[prompt]}$")
+        
+        while True:
+            answer=input("Do you want to continue (yes/no):").strip().lower()
+
+            if(answer=='yes' or answer=='no'):
+                break
+            else:
+                continue
+        
+        if(answer=="no"):
+            break
+        
+        else:
+            continue
