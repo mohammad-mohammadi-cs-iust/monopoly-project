@@ -90,6 +90,13 @@ def sell_properties():
         save_assets(assets)
 
         print(f"\n✔ You sold {prompt} for {user_assets[prompt]}$")
+
+        del user_assets[prompt]
+        del name_to_position[prompt]
+
+        if not user_assets:
+            print("You have no more assets to sell.")
+            break
         
         while True:
             answer=input("Do you want to continue (yes/no):").strip().lower()
@@ -101,6 +108,6 @@ def sell_properties():
         
         if(answer=="no"):
             break
-        
+
         else:
             continue
