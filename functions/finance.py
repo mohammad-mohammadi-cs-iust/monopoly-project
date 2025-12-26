@@ -34,3 +34,29 @@ def get_current_player():
             return players, players[i], i
 
     return None, None, None
+
+
+def sell_properties():
+    players, player, _ = get_current_player()
+    assets = load_assets()
+
+    username = player["username"]
+
+    print("\nHere are your assets that you can sell:\n")
+
+    has_any_asset = False
+
+    for position, asset in assets.items():
+
+        if asset.get("owner") == username and "buy_price" in asset:
+
+            buy_price = asset["buy_price"]
+            sell_price = buy_price // 2
+
+            print(f"- Position {position} | {asset['name']} | "
+                  f"Buy price: {buy_price}$ | Sell price: {sell_price}$")
+
+            has_any_asset = True
+
+    if not has_any_asset:
+        print("You don't own any assets to sell.")
