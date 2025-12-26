@@ -142,6 +142,7 @@ else:
 
                         with open(players_path, "w", encoding="utf-8") as f:
                             players_buffer.insert(0,"In Progress")
+                            players_buffer.insert(0,{"current_turn": 1})
                             json.dump(players_buffer, f, indent=4, ensure_ascii=False)
 
                         print("\nAll players logged in successfully!")
