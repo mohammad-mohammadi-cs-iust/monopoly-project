@@ -2,73 +2,111 @@ import json
 import os
 
 BASE_DIR = os.path.dirname(__file__)
-file_path_players = os.path.join(BASE_DIR,"user", "players.json")
-file_path_assets = os.path.join(BASE_DIR,"asset", "assets.json")
-
-def load_players(address = file_path_players):
-    try:
-        with open(address, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return []
+players_path = os.path.join(BASE_DIR, "user", "players.json")
+assets_path = os.path.join(BASE_DIR, "asset", "assets.json")
 
 
-def load_assets(address=file_path_assets):
-    try:
-        with open(address, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
+def load_players():
+    with open(players_path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 
-def check_position() :
-    playerslists = load_players()
-    game_status = playerslist[0]
-    players = playerslist[1:]
-    for player in players:
-        return player["position"]
-
-def check_money() :
-    playerslists = load_players()
-    game_status = playerslist[0]
-    players = playerslist[1:]
-    for player in players:
-        return player["money"]
+def save_players(players):
+    with open(players_path, "w", encoding="utf-8") as f:
+        json.dump(players, f, indent=4)
 
 
+def load_assets():
+    with open(assets_path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-def load_position() :
-    position = check_position()
-    with open(file_path_assets, "r", encoding="utf-8") as f:
-        assets = json.load(f)
-    return assets.get(position)
 
-def ownership() :
-    block = load_position()
-    block_cost = block.get("buy_price")
-    available_money = check_money()
-    while True :
-        if not block.get("owner") :
-            buy_req = input("do you wanna buy the block(yes/no)? ")
-            if buy_req == "yes" :
-                available_money -= block_cost
-                player["money"] = available_money
-                return True
-            elif buy_req == "no" :
-                return None
-            else :
-                print("invalid answer damn!")
-        else :
-            pass
+def save_assets(assets):
+    with open(assets_path, "w", encoding="utf-8") as f:
+        json.dump(assets, f, indent=4)
+
+
+def get_current_player():
+    players = load_players()
+    current_turn = players[1]["current_turn"]
+
+    for i in range(2, len(players)):
+        if players[i]["player_number"] == current_turn:
+            return players, players[i], i
+
+    return None, None, None
+
+
+def next_turn():
+    players = load_players()
+    total_players = len(players) - 2
+
+    current = players[1]["current_turn"]
+    current += 1
+    if current > total_players:
+        current = 1
+
+    players[1]["current_turn"] = current
+    save_players(players)
+
+
+def get_current_block(player):
+    assets = load_assets()
+    return assets.get(str(player["position"]))
 
 
 
+def ownership():
+    players, player, index = get_current_player()
+    assets = load_assets()
+
+    pos = str(player["position"])
+    block = assets.get(pos)
 
 
+    if "buy_price" not in block:
+        print("This block cannot be purchased.")
+        return
 
 
-def rent_paying(): 
-    pass
+    if block["owner"]==player["username"]:
+        print(f"{block['name']} is one of your Properties.")
+        return
+    
+
+    if block["owner"] is not None and block["owner"] != player["username"]:
+        print(f"{block['name']} belongs to {block['owner']}.")
+        return
+
+
+    if player["money"] < block["buy_price"]:
+        print(f"Your Money is not enough to Purchase {block['name']}")
+        return
+    
+
+    while True:
+        choice = input(f"\n{player['username']} buy {block['name']} for {block['buy_price']}? (yes/no): ").lower()
+
+        if(choice=="no" or choice=="yes"):
+            break
+
+        else:
+            continue
+
+    if choice == "yes":
+        player["money"] -= block["buy_price"]
+        player["assets"].append(pos)
+        block["owner"] = player["username"]
+
+        players[index] = player
+        assets[pos] = block
+
+        save_players(players)
+        save_assets(assets)
+        print(f"{block['name']} bought by {player['username']} ✔")
+
+    else:
+        pass
 
 
 
