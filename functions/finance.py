@@ -61,13 +61,19 @@ def sell_properties():
                 if(hotel==1 and house==0):
                     sell_price+=(asset.get("hotel_creating")//2)*hotel
 
-            user_assets[asset["name"]] = sell_price
-            name_to_position[asset["name"]] = position
+            user_assets[str(position)] = sell_price
+
             
             if(asset.get("house_num") or asset.get("hotel_num")):
 
                 print(
                     f"- Position {position} | {asset['name']} | House num:{asset['house_num']} | Hotel num:{asset['hotel_num']}"
+                    f"Buy price: {buy_price}$ | Sell price: {sell_price}$"
+                )
+
+            else:
+                print(
+                    f"- Position {position} | {asset['name']} |"
                     f"Buy price: {buy_price}$ | Sell price: {sell_price}$"
                 )
 
@@ -77,22 +83,25 @@ def sell_properties():
 
     while True:
         print(f"\nCurrent Money: {player['money']}$")
-        prompt = input("Which one do you want to sell?: ").strip()
+        prompt = input("Which one do you want to sell? type it's position: ").strip()
 
         if prompt not in user_assets:
-            print("The property you typed is not in your assets. Please try again.")
+            print("The position you typed is not in your assets. Please try again.")
             continue
+
+        position = int(prompt)
+
 
         player["money"] += user_assets[prompt]
 
         if prompt in player["assets"]:
-            player["assets"].remove(prompt)
+            player["assets"].remove(position)
 
-        position = name_to_position[prompt]
         assets[position]["owner"] = ""
 
         if "house_num" in assets[position]:
             assets[position]["house_num"] = 0
+
         if "hotel_num" in assets[position]:
             assets[position]["hotel_num"] = 0
 
@@ -101,10 +110,9 @@ def sell_properties():
         save_players(players)
         save_assets(assets)
 
-        print(f"\n✔ You sold {prompt} for {user_assets[prompt]}$")
+        print(f"\n✔ You sold {assets[position]['name']} for {user_assets[prompt]}$")
 
         del user_assets[prompt]
-        del name_to_position[prompt]
 
         if not user_assets:
             print("You have no more assets to sell.")
