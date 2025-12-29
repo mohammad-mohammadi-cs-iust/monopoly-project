@@ -51,13 +51,25 @@ def sell_properties():
             buy_price = asset["buy_price"]
             sell_price = buy_price // 2
 
+            if(asset.get("house_num") or asset.get("hotel_num")):
+                house=asset.get("house_num")
+                hotel=asset.get("hotel_num")
+
+                if(house > 0):
+                   sell_price+=(asset.get("house_creating")//2)*house
+
+                if(hotel==1 and house==0):
+                    sell_price+=(asset.get("hotel_creating")//2)*hotel
+
             user_assets[asset["name"]] = sell_price
             name_to_position[asset["name"]] = position
+            
+            if(asset.get("house_num") or asset.get("hotel_num")):
 
-            print(
-                f"- Position {position} | {asset['name']} | "
-                f"Buy price: {buy_price}$ | Sell price: {sell_price}$"
-            )
+                print(
+                    f"- Position {position} | {asset['name']} | House num:{asset['house_num']} | Hotel num:{asset['hotel_num']}"
+                    f"Buy price: {buy_price}$ | Sell price: {sell_price}$"
+                )
 
     if not user_assets:
         print("You don't own any assets to sell.")
@@ -113,6 +125,9 @@ def sell_properties():
 
         else:
             continue
+
+
+
 
 
 def resolve_bankrupt(position , dice):
