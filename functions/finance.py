@@ -44,7 +44,6 @@ def sell_properties():
     print("\nHere are your assets that you can sell:\n")
 
     user_assets = {}
-    name_to_position = {}
 
     for position, asset in assets.items():
         if asset.get("owner") == username and "buy_price" in asset:
@@ -52,8 +51,8 @@ def sell_properties():
             sell_price = buy_price // 2
 
             if(asset.get("house_num") or asset.get("hotel_num")):
-                house=asset.get("house_num")
-                hotel=asset.get("hotel_num")
+                house=asset.get("house_num",0)
+                hotel=asset.get("hotel_num",0)
 
                 if(house > 0):
                    sell_price+=(asset.get("house_creating")//2)*house
@@ -94,7 +93,7 @@ def sell_properties():
 
         player["money"] += user_assets[prompt]
 
-        if prompt in player["assets"]:
+        if position in player["assets"]:
             player["assets"].remove(position)
 
         assets[position]["owner"] = ""
