@@ -30,7 +30,8 @@ def insert_player(player_number, username):
         "money": 1500,
         "assets": [],     
         "position":1,
-        "prison":False
+        "prison":False,
+        "status":"In Progress",
     }
     
     players_buffer.append(new_player)
@@ -140,6 +141,7 @@ else:
                         players_path = os.path.join(BASE_DIR, "players.json")
 
                         with open(players_path, "w", encoding="utf-8") as f:
+                            players_buffer.insert(0,"In Progress")
                             json.dump(players_buffer, f, indent=4, ensure_ascii=False)
 
                         print("\nAll players logged in successfully!")

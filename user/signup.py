@@ -110,7 +110,7 @@ def create_user():
     user_id = str(uuid.uuid4())
 
     #create user dictionary to dump to users.json
-    user_info={'id':user_id,'username':username,'email':email , 'password':password}
+    user_info={'id':user_id,'username':username,'email':email , 'password':password,"point":0}
 
 
 
