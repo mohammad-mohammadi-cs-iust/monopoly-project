@@ -30,7 +30,7 @@ def insert_player(player_number, username):
         "money": 1500,
         "assets": [],     
         "position":1,
-        "prison":False,
+        "prison":0,
         "status":"In Progress",
     }
     
