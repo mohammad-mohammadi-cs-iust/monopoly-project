@@ -114,6 +114,7 @@ def build_houses_and_hotels():
     print("\nNow it's your turn to Build houses and hotels in your properties!!")
     players, player, index = get_current_player()
     assets = load_assets()
+    built_this_turn = False
 
     
     def can_build_on_color(color):
