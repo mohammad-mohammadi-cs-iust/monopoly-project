@@ -95,7 +95,7 @@ def ownership():
 
     if choice == "yes":
         player["money"] -= block["buy_price"]
-        player["assets"].append(pos)
+        player["assets"].append(block['name'])
         block["owner"] = player["username"]
 
         players[index] = player
@@ -136,6 +136,8 @@ def build_houses_and_hotels():
             colors.add(m.get("color"))
     
     for color in colors:
+        if built_this_turn:
+           break
         full_ownership, blocks = can_build_on_color(color)
 
         if full_ownership:
@@ -217,6 +219,8 @@ def build_houses_and_hotels():
                             selected["house_num"] = selected.get("house_num", 0) + 1
 
                             print(f"Built 1 house on {selected['name']} ✔")
+                            built_this_turn = True
+                            break
 
                         else:
                             print("Not enough money to build house.")
@@ -239,7 +243,9 @@ def build_houses_and_hotels():
 
                             selected["house_num"] = 0
 
-                            print(f"Built a hotel on {selected['name']} ✔")
+                            print(f"Built 1 hotel on {selected['name']} ✔")
+                            built_this_turn = True
+                            break
                         else:
                             print("Not enough money to build hotel.")
                     else:
