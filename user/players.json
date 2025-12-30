@@ -1,15 +1,15 @@
 [
+     "In Progress",
     {
         "current_turn": 1
     },
-    "In Progress",
     {
         "player_number": 1,
         "username": "Taylor",
         "money": 1500,
         "assets": [],
         "position": 1,
-        "prison": 0,
+        "prison": 1,
         "status": "In Progress"
     },
     {
