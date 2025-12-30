@@ -34,7 +34,7 @@ def is_player_in_prison():
 
 def get_free_from_jail_card(players, player, index ):
     player['prison']=0
-    
+
     if "get_out_of_jail" in player['assets']:
         player['assets'].remove("get_out_of_jail")
 
@@ -190,7 +190,7 @@ def manage_prison():
 
 
     print("\nOptions to get free from Jail:")
-    for i, option in enumerate(choices, 1):
+    for i, option in enumerate(choices):
         print(f"{i}. {option}")
 
     while True:
