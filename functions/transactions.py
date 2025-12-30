@@ -160,7 +160,9 @@ def build_houses_and_hotels():
 
 
             while True:
-
+                if built_this_turn:
+                   break
+                
                 choice = input("Which property do you want to build on? (name/skip): ").strip()
 
                 if choice.lower() == "skip":
@@ -219,6 +221,8 @@ def build_houses_and_hotels():
 
                             selected["house_num"] = selected.get("house_num", 0) + 1
 
+                            assets[str(selected["position"])] = selected
+
                             print(f"Built 1 house on {selected['name']} ✔")
                             built_this_turn = True
                             break
@@ -244,6 +248,9 @@ def build_houses_and_hotels():
 
                             selected["house_num"] = 0
 
+                            assets[str(selected["position"])] = selected
+
+
                             print(f"Built 1 hotel on {selected['name']} ✔")
                             built_this_turn = True
                             break
@@ -252,7 +259,6 @@ def build_houses_and_hotels():
                     else:
                         print("You need 4 houses first to build a hotel.")
 
-                assets[str(selected["position"])] = selected
 
     players[index] = player
     save_players(players)
