@@ -32,7 +32,7 @@ def draw_board(players=None):
     
        grid.append(row)
 
-       
+
 
     positions = generate_positions()
 
@@ -51,5 +51,6 @@ players = {
     26:["p4"]
 }
 
+print("\n====================================== Maps of The Game =============================================\n")
 draw_board(players)
 
