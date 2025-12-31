@@ -17,7 +17,7 @@ def calculate_total_asset_value(player, assets):
     total_value = 0
     for asset in assets.values():
         if asset.get("owner") == player["username"]:
-            total_value += asset.get("price", 0)  
+            total_value += asset.get("buy_price", 0)  
     return total_value
 
 def build_scoreboard():
@@ -32,21 +32,38 @@ def build_scoreboard():
 
         asset_value = calculate_total_asset_value(player, assets)
         total_value = player["money"] + asset_value
-        num_assets = sum(1 for a in assets.values() if a.get("owner") == player["username"])
+        assets_name = player['assets']
+
+        assets_name=", ".join(assets_name)
 
         scoreboard.append({
             "username": player["username"],
             "total_value": total_value,
-            "num_assets": num_assets,
-            "money": player["money"]
+            "assets_name": assets_name,
+            "money": player["money"],
+            "status":player['status'],
+            "player_num":player['player_number'],
+            "position":player['position'],
+            "prison":True if player['prison'] > 0 else False
         })
 
-    scoreboard.sort(key=lambda x: (-x["total_value"], -x["num_assets"], -x["money"]))
+    current_player=[]
 
-    return scoreboard
+    for item in scoreboard:
+        if(players[1]['current_turn']==item['player_num']):
+           current_player.append(item)
+           scoreboard.remove(item)
 
-if __name__ == "__main__":
-    scoreboard = build_scoreboard()
-    print("===== Monopoly Scoreboard =====")
+    return scoreboard,current_player
+
+def run_scoreboard():
+    scoreboard,current_player = build_scoreboard()
+    print("\n========================== Monopoly Scoreboard ======================\n")
     for i, player in enumerate(scoreboard, 1):
-        print(f"{i}. {player['username']} - Total Value: {player['total_value']} | Assets: {player['num_assets']} | Cash: {player['money']}")
+            print(f"{i}. Username: {player['username']} | Cash: {player['money']} | Player Position:{player['position']} | Assets: {player['assets_name']} | Status: {player['status']} | Prison Status:{player['prison']}")
+    
+    print("\n========================== Current Turn player ======================\n")
+    for player in current_player:
+        print(f"Info: Username: {player['username']} | Cash: {player['money']} | Player Position:{player['position']} | Assets: {player['assets_name']} | Status: {player['status']} | Prison Status:{player['prison']}")
+
+run_scoreboard()
