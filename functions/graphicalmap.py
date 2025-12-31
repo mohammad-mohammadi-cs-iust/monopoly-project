@@ -22,7 +22,18 @@ def generate_positions():
 
 
 def draw_board(players=None):
-    grid = [[empty_cell() for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+    grid = []
+    
+    for i in range(BOARD_SIZE):          
+       row = []
+       
+       for i in range(BOARD_SIZE):       
+           row.append(empty_cell())
+    
+       grid.append(row)
+
+       
+
     positions = generate_positions()
 
     for i, (r, c) in enumerate(positions, 1):
