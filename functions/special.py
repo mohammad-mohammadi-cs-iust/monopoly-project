@@ -175,54 +175,6 @@ def community_chest_card(player):
 
 
 
-def handle_railroad(player, railroad_owner):
-    if player == railroad_owner:
-        print(f"{player['name']} owns the railroad and does not pay rent.")
-        return
-
-    railroad_count = len(railroad_owner['railroads'])
-    if railroad_count == 1:
-        rent = 25
-    elif railroad_count == 2:
-        rent = 50
-    elif railroad_count == 3:
-        rent = 100
-    elif railroad_count == 4:
-        rent = 200
-    else:
-        rent = 0
-    player['money'] -= rent
-    print(f"{player['name']} paid ${rent} rent to {railroad_owner['name']}.")
-
-
-def handle_utility(player, utility_owner, dice_roll):
-    if player == utility_owner:
-        print(f"{player['name']} owns the utility and does not pay rent.")
-        return
-    utility_count = len(utility_owner['utilities'])
-    if utility_count == 1:
-        rent = dice_roll * 4
-    elif utility_count == 2:
-        rent = dice_roll * 10
-    else:
-        rent = 0
-    player['money'] -= rent
-    utility_owner['money'] += rent
-    print(f"{player['name']} paid ${rent} rent to {utility_owner['name']} for the utility.")
-
-def handle_tax(player, tax_type):
-    if tax_type == "income":
-        print(f"{player['name']} landed on Income Tax!")
-        tax_amount = 200
-        print(f"{player['name']} must pay ${tax_amount} in Income Tax.")
-        
-    elif tax_type == "luxury":
-        print(f"{player['name']} landed on Luxury Tax!")
-        tax_amount = 100
-
-    player['money'] -= tax_amount
-    print(f"{player['name']} paid ${tax_amount} in {tax_type} tax.")
-    
 def free_parking(player):
     print(f"{player['name']} landed on Free Parking. No action.")
 
