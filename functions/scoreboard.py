@@ -13,16 +13,9 @@ def load_assets():
     with open(ASSETS_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
-def calculate_total_asset_value(player, assets):
-    total_value = 0
-    for asset in assets.values():
-        if asset.get("owner") == player["username"]:
-            total_value += asset.get("buy_price", 0)  
-    return total_value
 
 def build_scoreboard():
     players = load_players()
-    assets = load_assets()
 
     scoreboard = []
     for player in players:
@@ -30,15 +23,12 @@ def build_scoreboard():
         if not isinstance(player, dict) or "username" not in player:
             continue  
 
-        asset_value = calculate_total_asset_value(player, assets)
-        total_value = player["money"] + asset_value
         assets_name = player['assets']
 
         assets_name=", ".join(assets_name)
 
         scoreboard.append({
             "username": player["username"],
-            "total_value": total_value,
             "assets_name": assets_name,
             "money": player["money"],
             "status":player['status'],
