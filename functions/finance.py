@@ -289,6 +289,15 @@ def resolve_bankrupt(position , dice):
                 railroad_count += 1
         rent = railroad_count * 25
 
+
+    elif "Tax" in current_asset['name']:
+        owner_name=None
+        if("Income Tax" in current_asset['name']):
+            rent=200
+
+        elif("Luxury Tax" in current_asset['name']):
+             rent=100
+
     elif current_asset["name"] in ("Water Works", "Electric Company"):
         utility_count = 0
 
@@ -302,18 +311,32 @@ def resolve_bankrupt(position , dice):
         elif(utility_count==2):
             rent=dice*10
 
+    if(owner_name!=None):
+       print(f"\n💸 Rent required to pay to {owner_name}: {rent}$")
 
-    print(f"\n💸 Rent required to pay to {owner_name}: {rent}$")
+    else:
+       print(f"\n💸 Tax required to pay is {rent}$.") 
 
 
     while player["money"] < rent:
-        print(f"\nYou need {rent}$ to pay rent but you have only {player['money']}$.\nConsider selling properties.")
+        if(owner_name!=None):
+           print(f"\nYou need {rent}$ to pay rent but you have only {player['money']}$.\nConsider selling properties.")
+
+        else:
+             print(f"\nYou need {rent}$ to pay tax but you have only {player['money']}$.\nConsider selling properties.")
+
         result=sell_properties_to_resolve_bankrupt(rent)
 
         players, player, player_index = get_current_player()
 
         if player["money"] >= rent:
-            print(f"\n💰 You now have enough money ({player['money']}$) to pay the rent.")
+
+            if(owner_name!=None):
+               
+               print(f"\n💰 You now have enough money ({player['money']}$) to pay the rent.")
+
+            else:
+                print(f"\n💰 You now have enough money ({player['money']}$) to pay the tax.")
             break
 
         if result is False:
@@ -325,29 +348,59 @@ def resolve_bankrupt(position , dice):
     if player["money"] < rent:
         print(f"\n☠ {player['username']} is BANKRUPT!")
 
-        for asset in assets.values():
-            if asset.get("owner") == player["username"]:
-                asset["owner"] = owner_name
-        
-        owner["money"] += player["money"]
+        if(owner_name!=None):
 
-        player["money"] = 0
-        player["status"] = "Bankrupt"
-        player["assets"] = []
-        players[player_index] = player
-        players[owner_index] = owner
+            for asset in assets.values():
+                if asset.get("owner") == player["username"]:
+                    asset["owner"] = owner_name
+            
+            owner["money"] += player["money"]
+
+            player["money"] = 0
+            player["status"] = "Bankrupt"
+            player["assets"] = []
+            players[player_index] = player
+            players[owner_index] = owner
+
+
+        else:
+            for asset in assets.values():
+                if asset.get("owner") == player["username"]:
+                    asset["owner"] = ""
+
+                if(asset.get('house_num') or asset.get('hotel_num')):
+                    asset['house_num']=0
+                    asset['hotel_num']=0
+            
+            player["money"] =0
+
+            player["status"] = "Bankrupt"
+            player["assets"] = []
+            players[player_index] = player
 
         save_players(players)
         save_assets(assets)
         return
+    
+    if(owner_name!=None):
 
-    player["money"] -= rent
-    owner["money"] += rent
+        player["money"] -= rent
+        owner["money"] += rent
 
-    players[player_index] = player
-    players[owner_index] = owner
+        players[player_index] = player
+        players[owner_index] = owner
+
+    else:
+        player["money"] -= rent
+        players[player_index] = player
+
 
     save_players(players)
+    
+    if(owner_name!=None):
+      print(f"\n✅ {player['username']} paid {rent}$ rent to {owner_name}")
 
-    print(f"\n✅ {player['username']} paid {rent}$ rent to {owner_name}")
+    else:
+        print(f"\n✅ {player['username']} paid {rent}$ for taxes.")
+
     print(f"💰 Your new balance: {player['money']}$")
