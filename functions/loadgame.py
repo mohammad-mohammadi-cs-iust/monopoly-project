@@ -8,14 +8,21 @@ users_path= os.path.join(BASE_DIR, "user", "users.json")
 
 
 def load_players():
-    with open(players_path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with open(players_path, "r", encoding="utf-8") as f:
+            data=json.load(f)
+            return data if data else []
+        
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
 
 
 def load_users(address=users_path):
     try:
         with open(address, "r", encoding="utf-8") as f:
-            return json.load(f)
+            data=json.load(f)
+            return data if data else []
+
     except (FileNotFoundError, json.JSONDecodeError):
         return []
 
@@ -57,32 +64,40 @@ TOTAL_PLAYERS = 4
 
 header_box("Load Game")
 
-while logged_in_player <= TOTAL_PLAYERS:
-    header_box(f"Player {logged_in_player}")
+if not load_users() or not load_players():
+    print(
+        "Sorry but there is no in progress game in database "
+        "please go to login section and start a new game."
+    )
 
-    username = show_username(logged_in_player)
-    print("Username:", username)
 
-    if not check_password(username):
-        break
+else:
+    while logged_in_player <= TOTAL_PLAYERS:
+        header_box(f"Player {logged_in_player}")
 
-    logged_in_player += 1
+        username = show_username(logged_in_player)
+        print("Username:", username)
 
-    while True:
-        answer = input("\nDo you want to continue? (yes/no): ").strip().lower()
-        if answer in ("yes", "no"):
+        if not check_password(username):
+            break
+
+        logged_in_player += 1
+
+        while True:
+            answer = input("\nDo you want to continue? (yes/no): ").strip().lower()
+            if answer in ("yes", "no"):
+                break
+
+
+        
+        if answer == "no":
+            print("Loading Game Cancelled....")
             break
 
 
-    
-    if answer == "no":
-        print("Loading Game Cancelled....")
-        break
-
-
-    if logged_in_player > TOTAL_PLAYERS:
-        print("\nAll players logged in successfully!")
-        print("\nContinuing the previous game...")
-        break
+        if logged_in_player > TOTAL_PLAYERS:
+            print("\nAll players logged in successfully!")
+            print("\nContinuing the previous game...")
+            break
 
    
