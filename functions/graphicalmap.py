@@ -45,12 +45,12 @@ def draw_board(players=None):
             print("".join(col[h] for col in row))
 
 
-players = {
+players_board= {
     1: ["p1","p2"],
     33:["p3"],
     26:["p4"]
 }
 
 print("\n====================================== Maps of The Game =============================================\n")
-draw_board(players)
+draw_board(players_board)
 
