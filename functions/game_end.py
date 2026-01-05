@@ -56,4 +56,4 @@ def end_game_if_finished():
         
         save_json(PLAYERS_FILE, [])
 
-        print("Game ended successfully. Data moved to scoreboard.json.")
+        return("Game ended successfully. Returning to the menu....")
