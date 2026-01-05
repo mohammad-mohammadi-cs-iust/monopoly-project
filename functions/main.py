@@ -3,6 +3,7 @@ from functions.finance import *
 from functions.transactions import *
 from functions.special import *
 from functions.graphicalmap import players_board
+from functions.jail import *
 def dice():
     dice_1 = random.randint(1, 6)
     dice_2 = random.randint(1, 6)
@@ -65,29 +66,9 @@ while True:
             else:
                 ownership()
                 sell_properties()
-    elif user['prison'] == 3:
-        if user['money'] >= 50:
-            user['money'] -= 50
-            user['prison'] = 0
-        else:
-            resolve_bankrupt()
     else:
-        option = input('which option do you want to try(ENTER A NUMBER)?:[1:try to double dice, 2:try a chance card, 3: pay 50$]')
-        if option == '1':
-            total_dice, dice_1, dice_2 = dice()
-            if dice_1 == dice_2:
-                user['prison'] = 0
-                user['position'] += total_dice
-            else:
-                user['prison'] += 1
-        elif option == '2':
-            chance_card()
-        elif option == '3':
-            if user['money'] >= 50:
-                user['money'] -= 50
-                user['prison'] = 0
-            else:
-                user['prison'] += 1  
+        manage_prison()
+    
 
 
 
