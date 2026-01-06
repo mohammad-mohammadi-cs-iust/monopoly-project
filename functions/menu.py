@@ -1,10 +1,20 @@
+import os
+import sys
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+
+
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich.prompt import Prompt
 from rich.align import Align
 from rich.text import Text
-import os
+from user.signup import run_signup
+from user.login import run_login
+from functions.loadgame import run_loadgame
 
 console = Console()
 
@@ -94,11 +104,22 @@ def run_menu():
                 if sub_choice == "3":
                     break
 
+                elif sub_choice=="1":
+                    clear()
+                    run_signup()
+
+                elif sub_choice=="2":
+                    clear()
+                    run_login()
+
+                
+
+
                 pause()
 
         elif choice == "2":
-            console.print("\n[bold blue]Load Game[/bold blue]")
-            pause()
+            clear()
+            run_loadgame()
 
         elif choice == "3":
             console.print("\n[bold magenta]Leaderboard[/bold magenta]")
