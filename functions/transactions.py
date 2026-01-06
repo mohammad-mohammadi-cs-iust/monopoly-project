@@ -63,208 +63,164 @@ def ownership():
     pos = str(player["position"])
     block = assets.get(pos)
 
-
-    if "buy_price" not in block:
-        print("This block cannot be purchased.")
+    if block is None or "buy_price" not in block or block["buy_price"] <= 0:
+        print(f"{block.get('name','This block')} cannot be purchased. Move on.")
         return
 
-
-    if block["owner"]==player["username"]:
-        print(f"{block['name']} is one of your Properties.")
+    if block.get("owner") == player["username"]:
+        print(f"{block['name']} is already one of your properties.")
         return
-    
 
-    if block["owner"] is not None and block["owner"] != player["username"]:
+    if block.get("owner") not in (None, ""):
         print(f"{block['name']} belongs to {block['owner']}.")
         return
 
-
     if player["money"] < block["buy_price"]:
-        print(f"Your Money is not enough to Purchase {block['name']}")
+        print(f"You don't have enough money to buy {block['name']} (${block['buy_price']}).")
         return
-    
 
     while True:
-        choice = input(f"\n{player['username']} buy {block['name']} for {block['buy_price']}? (yes/no): ").lower()
-
-        if(choice=="no" or choice=="yes"):
+        choice = input(f"\nDo you want to buy {block['name']} for ${block['buy_price']}? (yes/no): ").strip().lower()
+        if choice in ("yes", "no"):
             break
-
-        else:
-            continue
+        print("Please type 'yes' or 'no'.")
 
     if choice == "yes":
         player["money"] -= block["buy_price"]
-        player["assets"].append(block['name'])
+        if block['name'] not in player["assets"]:
+            player["assets"].append(block['name'])
         block["owner"] = player["username"]
-
         players[index] = player
         assets[pos] = block
-
         save_players(players)
         save_assets(assets)
-        print(f"{block['name']} bought by {player['username']} ✔")
-
+        print(f"\n✔ {block['name']} bought successfully by {player['username']} for ${block['buy_price']}.")
     else:
-        pass
+        print(f"You chose not to buy {block['name']}.")
+
+
 
 
 
 def build_houses_and_hotels():
-    print("\nNow it's your turn to Build houses and hotels in your properties!!")
     players, player, index = get_current_player()
-    assets = load_assets()
     built_this_turn = False
 
-    
     def can_build_on_color(color):
-        owned_blocks=[]
-        total_blocks=[]
-
+        assets = load_assets()
+        owned_blocks = []
+        total_blocks = []
         for b in assets.values():
-            if(b.get("color")==color and b.get("owner")==player["username"]):
+            if b.get("color") == color and b.get("owner") == player["username"]:
                 owned_blocks.append(b)
-
-            if(b.get("color")==color):
+            if b.get("color") == color:
                 total_blocks.append(b)
-
         return len(owned_blocks) == len(total_blocks), owned_blocks
-    
-    colors=set()
 
+    colors = set()
+    assets = load_assets()
     for m in assets.values():
-        if(m.get("color") and m.get("owner")==player["username"]):
+        if m.get("color") and m.get("owner") == player["username"]:
             colors.add(m.get("color"))
-    
+
+    possible_to_build = False
+    for color in colors:
+        full_ownership, blocks = can_build_on_color(color)
+        if full_ownership:
+            possible_to_build = True
+            break
+
+    if not possible_to_build:
+        print("\n❌ You cannot build houses or hotels because you don't own a complete color set.")
+        return
+
+    print("\n🏗️ Now it's your turn to build houses or hotels on your properties!")
     for color in colors:
         if built_this_turn:
-           break
+            break
         full_ownership, blocks = can_build_on_color(color)
+        if not full_ownership:
+            continue
+        print(f"\n--------Color Group: {color}---------")
+        print(f"\nYou own all {color} properties. You can build houses/hotels!")
+        blocks.sort(key=lambda b: b.get("house_num", 0))
+        for block in blocks:
+            houses = block.get("house_num", 0)
+            hotel = block.get("hotel_num", 0)
+            print(f"- {block['name']}: House number={houses}, Hotel number={hotel}, House price={block.get('house_creating')}, Hotel price={block.get('hotel_creating')}")
 
-        if full_ownership:
+        while True:
+            assets = load_assets()
+            full_ownership, blocks = can_build_on_color(color)
+            if not blocks:
+                print("You no longer own a full color set. Cannot build.")
+                break
 
-            print(f"\n--------Color Group:{color}---------")
+            choice = input("Which property do you want to build on? (name/skip): ").strip()
+            if choice.lower() == "skip":
+                break
 
-            print(f"\nYou own all {color} properties. You can build houses/hotels!")
-
-            def get_houses(block):
-                return block.get("house_num", 0)
-            
-            blocks.sort(key=get_houses)
-
-
+            selected = None
             for block in blocks:
-                houses = block.get("house_num", 0)
-                hotel = block.get("hotel_num", 0)
-                print(f"-{block['name']}: House number={houses}, Hotel number={hotel} ,House price={block.get('house_creating')},Hotel price={block.get('hotel_creating')}")
-
-
-            while True:
-                if built_this_turn:
-                   break
-                
-                choice = input("Which property do you want to build on? (name/skip): ").strip()
-
-                if choice.lower() == "skip":
+                if block["name"].lower() == choice.lower():
+                    selected = block
                     break
+            if not selected:
+                print("Invalid property name.")
+                continue
+            if selected.get("hotel_num", 0) == 1:
+                print("This property already has a hotel.")
+                continue
 
+            build_choice = input("Build house or hotel? (house/hotel/skip): ").lower()
+            if build_choice == "skip":
+                break
 
-                selected = None
+            min_houses = min(block.get("house_num", 0) for block in blocks)
 
-                for block in blocks:
-                    if block["name"].lower() == choice.lower():
-                        selected = block
-                        break
-
-                if not selected:
-                    print("Invalid property name.")
+            if build_choice == "house":
+                if selected.get("house_num", 0) >= 4:
+                    print("Already 4 houses. Consider building a hotel.")
                     continue
+                if selected.get("house_num", 0) > min_houses:
+                    print(f"You must build houses evenly across all {color} properties.")
+                    continue
+                cost = selected.get("house_creating", 50)
+                if player["money"] < cost:
+                    print("Not enough money to build a house.")
+                    break
+                player["money"] -= cost
+                selected["house_num"] = selected.get("house_num", 0) + 1
+                assets[str(selected["position"])] = selected
+                save_assets(assets)
+                built_this_turn = True
+                print(f"✅ Built 1 house on {selected['name']}")
+                break
 
-                if selected.get("hotel_num", 0)==1:
+            elif build_choice == "hotel":
+                if selected.get("house_num", 0) < 4:
+                    print("You need 4 houses first to build a hotel.")
+                    continue
+                if selected.get("hotel_num", 0) == 1:
                     print("This property already has a hotel.")
                     continue
-
-
-                while True:
-
-                    build_choice = input("Build house or hotel? (house/hotel/skip): ").lower()
-
-
-                    min_houses = min(block.get("house_num", 0) for block in blocks)
-                    
-                    if build_choice=='house' and selected.get("house_num", 0) > min_houses:
-                        print(f"\nYou must build houses evenly across all properties of {color} color.")
-                        continue
-
-                    elif build_choice in ("house", "hotel", "skip"):
-                        break
-
-                    
-
-
-                    print("Please type 'house', 'hotel', or 'skip'.")
-
-
-                if build_choice == "skip":
-                    continue
-
-
-                if build_choice == "house":
-
-                    if selected.get("house_num", 0) < 4:
-
-                        cost = selected.get("house_price", 50)
-
-                        if player["money"] >= cost:
-
-                            player["money"] -= cost
-
-                            selected["house_num"] = selected.get("house_num", 0) + 1
-
-                            assets[str(selected["position"])] = selected
-
-                            print(f"Built 1 house on {selected['name']} ✔")
-                            built_this_turn = True
-                            break
-
-                        else:
-                            print("Not enough money to build house.")
-
-                    else:
-
-                        print("Already 4 houses. Consider building a hotel.")
-
-                elif build_choice == "hotel":
-
-                    if selected.get("house_num", 0) == 4 and selected.get("hotel_num", 0)==0:
-
-                        cost = selected.get("hotel_price", 200)
-
-                        if player["money"] >= cost:
-
-                            player["money"] -= cost
-
-                            selected["hotel_num"] = 1
-
-                            selected["house_num"] = 0
-
-                            assets[str(selected["position"])] = selected
-
-
-                            print(f"Built 1 hotel on {selected['name']} ✔")
-                            built_this_turn = True
-                            break
-                        else:
-                            print("Not enough money to build hotel.")
-                    else:
-                        print("You need 4 houses first to build a hotel.")
-
+                cost = selected.get("hotel_creating", 200)
+                if player["money"] < cost:
+                    print("Not enough money to build a hotel.")
+                    break
+                player["money"] -= cost
+                selected["hotel_num"] = 1
+                selected["house_num"] = 0
+                assets[str(selected["position"])] = selected
+                save_assets(assets)
+                built_this_turn = True
+                print(f"✅ Built 1 hotel on {selected['name']}")
+                break
 
     players[index] = player
     save_players(players)
-    save_assets(assets)
-                
-    
+
+
 
 
 def play_turn():
