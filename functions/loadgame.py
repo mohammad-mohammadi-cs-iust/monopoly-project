@@ -2,6 +2,7 @@ import bcrypt
 import json
 import os
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 players_path= os.path.join(BASE_DIR, "user", "players.json")
 users_path= os.path.join(BASE_DIR, "user", "users.json")
@@ -100,7 +101,5 @@ def run_loadgame():
             if logged_in_player > TOTAL_PLAYERS:
                 print("\nAll players logged in successfully!")
                 input("\nPress any key to continue the previous game...")
-
-                break
-
-   
+                os.system("cls" if os.name == "nt" else "clear")
+                return True
