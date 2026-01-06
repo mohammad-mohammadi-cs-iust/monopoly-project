@@ -1,3 +1,13 @@
+import os
+import json
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PLAYERS_FILE = os.path.join(BASE_DIR, "user", "players.json")
+
+def load_players():
+    with open(PLAYERS_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
 BOARD_SIZE = 11
 CELL_W = 15
 
@@ -45,12 +55,25 @@ def draw_board(players=None):
             print("".join(col[h] for col in row))
 
 
-players_board= {
-    1: ["p1","p2"],
-    33:["p3"],
-    26:["p4"]
+
+
+
+def run_graphicalmap():
+    print("\n====================================== Maps of The Game =============================================\n")
+    players=load_players()
+    players=players[2:]
+
+    players_board= {
+
 }
 
-print("\n====================================== Maps of The Game =============================================\n")
-draw_board(players_board)
+    for player in players:
 
+        if(player['position'] in players_board):
+            players_board[player['position']].append("p"+str(player['player_number']))
+
+        else:
+            players_board[player['position']]=[]
+            players_board[player['position']].append("p"+str(player['player_number']))
+
+    draw_board(players_board)
