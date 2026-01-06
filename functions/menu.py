@@ -110,7 +110,10 @@ def run_menu():
 
                 elif sub_choice=="2":
                     clear()
-                    run_login()
+                    func=run_login()
+
+                    if(func):
+                        return True
 
                 
 
@@ -119,7 +122,10 @@ def run_menu():
 
         elif choice == "2":
             clear()
-            run_loadgame()
+            func=run_loadgame()
+
+            if(func):
+                return True
 
         elif choice == "3":
             console.print("\n[bold magenta]Leaderboard[/bold magenta]")
