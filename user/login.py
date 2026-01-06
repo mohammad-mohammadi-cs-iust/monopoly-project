@@ -4,8 +4,12 @@ import os
 
 BASE_DIR = os.path.dirname(__file__)
 file_path = os.path.join(BASE_DIR, "users.json")
+scoreboard_path= os.path.join(BASE_DIR, "scoreboard.json")
+
 
 players_buffer = []
+
+logged_in_player=1
 
 
 def load_users(address=file_path):
@@ -14,7 +18,16 @@ def load_users(address=file_path):
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return []
+    
 
+def load_scoreboard(address=scoreboard_path):
+
+    try:
+        with open(address, "r", encoding="utf-8") as f:
+            return json.load(f)
+        
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
 
 
 def insert_player(player_number, username):
@@ -90,7 +103,6 @@ def login():
         else:
             return False
 
-logged_in_player=1
 
 
 def header_box(text, width=32):
@@ -101,50 +113,64 @@ def header_box(text, width=32):
 
 
 #check if there is at least for 4 players in users.json
-load_user=load_users()
+def run_login():
 
-if not (len(load_user)>=4):
-    print("\nSorry, There should be at least 4 users to start the game. Please go to sign up and add 4 players to start the game.")
+    logged_in_player=1
+    header_box("LOGIN")
+    load_user=load_users()
 
-else:
-    players_path = os.path.join(BASE_DIR, "players.json")
-    #load previous users
-    player_initial=load_users(players_path)
+    if not (len(load_user)>=4):
+        print("\nSorry, There should be at least 4 users to start the game. Please go to sign up and add 4 players to start the game.")
 
-    # reset players.json at game start
-    with open(players_path, "w", encoding="utf-8") as f:
-        json.dump([], f, indent=4, ensure_ascii=False)
+    else:
+        players_path = os.path.join(BASE_DIR, "players.json")
+        #load previous users
+        player_initial=load_users(players_path)
 
-        #run the programm
-    while logged_in_player != 5:
-            header_box("Player " + str(logged_in_player))
+        # reset players.json at game start
+        with open(players_path, "w", encoding="utf-8") as f:
+            json.dump([], f, indent=4, ensure_ascii=False)
 
-            if login():              
-                logged_in_player += 1
-                
-                while True:
-                    answer=input("\nDo you want to continue? (yes/no):").strip()
-                    if(answer=="yes" or answer=="no"):
-                        break
-                    else:
-                        pass
+            #run the programm
+        while logged_in_player != 5:
+                header_box("Player " + str(logged_in_player))
 
-                if(answer=="no"):
-                    with open(players_path, "w", encoding="utf-8") as f:
-                        json.dump(player_initial, f, indent=4, ensure_ascii=False)
+                if login():              
+                    logged_in_player += 1
+                    
+                    while True:
+                        answer=input("\nDo you want to continue? (yes/no):").strip()
+                        if(answer=="yes" or answer=="no"):
+                            break
+                        else:
+                            pass
 
-                    exit()
-
-                else:
-                    if logged_in_player == 5:
-
-                        players_path = os.path.join(BASE_DIR, "players.json")
-
+                    if(answer=="no"):
                         with open(players_path, "w", encoding="utf-8") as f:
-                            players_buffer.insert(0,{"current_turn": 1})
-                            players_buffer.insert(0,"In Progress")
-                            json.dump(players_buffer, f, indent=4, ensure_ascii=False)
+                            json.dump(player_initial, f, indent=4, ensure_ascii=False)
 
-                        print("\nAll players logged in successfully!")
-                        print("\nStarting new game...")
+                        break
+
+                    else:
+                        if logged_in_player == 5:
+
+                            players_path = os.path.join(BASE_DIR, "players.json")
+
+                            with open(players_path, "w", encoding="utf-8") as f:
+                                players_buffer.insert(0,{"current_turn": 1})
+                                players_buffer.insert(0,"In Progress")
+                                json.dump(players_buffer, f, indent=4, ensure_ascii=False)
+
+                            scoreboard=load_scoreboard()
+                            
+                            with open(scoreboard_path, 'w' , encoding="utf-8") as f:
+                                player_initial[0]="Cancelled"
+                                player_initial.pop(1)
+                                scoreboard.append(player_initial)
+                                json.dump(scoreboard , f , indent=4, ensure_ascii=False)
+
+                            
+
+                            print("\nAll players logged in successfully!")
+                            print("\nStarting new game...")
 
