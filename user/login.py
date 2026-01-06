@@ -2,14 +2,17 @@ import bcrypt
 import json
 import os
 
+
+
 BASE_DIR = os.path.dirname(__file__)
+BASE_DIR2= os.path.dirname(os.path.dirname(__file__))
 file_path = os.path.join(BASE_DIR, "users.json")
 scoreboard_path= os.path.join(BASE_DIR, "scoreboard.json")
+assets_path= os.path.join(BASE_DIR2, "asset","assets.json")
+print(assets_path)
 
 
 players_buffer = []
-
-logged_in_player=1
 
 
 def load_users(address=file_path):
@@ -29,6 +32,30 @@ def load_scoreboard(address=scoreboard_path):
     except (FileNotFoundError, json.JSONDecodeError):
         return []
 
+
+def load_assets():
+    with open(assets_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_assets(assets):
+    with open(assets_path, "w", encoding="utf-8") as f:
+        json.dump(assets, f, indent=4)
+
+def reset_assets():
+    assets = load_assets()
+    if not isinstance(assets, dict):
+        return
+
+    for asset in assets.values():
+        if "owner" in asset:
+            asset["owner"] = ""
+        if "house_num" in asset:
+            asset["house_num"] = 0
+        if "hotel_num" in asset:
+            asset["hotel_num"] = 0
+
+    save_assets(assets)
 
 def insert_player(player_number, username):
 
@@ -86,7 +113,7 @@ def check_password(username):
                     print("Incorrect password. Try again.")
 
 
-def login():
+def login(player_number):
     if not os.path.exists(file_path):
         print("No users registered.")
         return False
@@ -95,7 +122,7 @@ def login():
 
     if check_password(username):
 
-        success = insert_player(logged_in_player, username)
+        success = insert_player(player_number, username)
 
         if success:
             print(f"User '{username}' logged in successfully!")
@@ -115,8 +142,10 @@ def header_box(text, width=32):
 #check if there is at least for 4 players in users.json
 def run_login():
 
-    logged_in_player=1
+
     header_box("LOGIN")
+    logged_in_player=1
+
     load_user=load_users()
 
     if not (len(load_user)>=4):
@@ -135,7 +164,7 @@ def run_login():
         while logged_in_player != 5:
                 header_box("Player " + str(logged_in_player))
 
-                if login():              
+                if login(logged_in_player):              
                     logged_in_player += 1
                     
                     while True:
@@ -164,13 +193,19 @@ def run_login():
                             scoreboard=load_scoreboard()
                             
                             with open(scoreboard_path, 'w' , encoding="utf-8") as f:
-                                player_initial[0]="Cancelled"
-                                player_initial.pop(1)
-                                scoreboard.append(player_initial)
+
+                                if(len(player_initial)!=0):
+                                    player_initial[0]="Cancelled"
+                                    player_initial.pop(1)
+                                    scoreboard.append(player_initial)
+
                                 json.dump(scoreboard , f , indent=4, ensure_ascii=False)
 
-                            
+                            reset_assets()
 
                             print("\nAll players logged in successfully!")
                             print("\nStarting new game...")
+                            input("press any key to start the new game...")
+                            os.system("cls" if os.name == "nt" else "clear")
+                            return True
 
