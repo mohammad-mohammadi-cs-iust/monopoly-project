@@ -1,0 +1,80 @@
+[
+    [
+        "Cancelled",
+        {
+            "player_number": 1,
+            "username": "Taylor",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 1,
+            "username": "Newcastle",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 1,
+            "username": "Newcastle2",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 1,
+            "username": "Newcastle4",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "In Progress"
+        }
+    ],
+    [
+        "Cancelled",
+        {
+            "player_number": 1,
+            "username": "Newcastle4",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 1,
+            "username": "Newcastle",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 1,
+            "username": "Taylor",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 1,
+            "username": "Newcastle2",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "In Progress"
+        }
+    ]
+]

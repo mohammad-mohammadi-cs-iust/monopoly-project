@@ -18,20 +18,27 @@
         "username": "Newcastle3",
         "email": "amintssga.2007@gmail.com",
         "password": "$2b$12$dTPKuFFYo2/gAgusUdOBPuPciMgWZ75KRBi61UV2dyV8otAEzquPC",
-        "point":0
+        "point": 0
     },
     {
         "id": "9427b0a3-3983-46e9-831a-3e6f3e174ac3",
         "username": "Newcastle4",
         "email": "aminntaha.2007@gmail.com",
         "password": "$2b$12$/9Hvdt/EsIZZWZEMsc0eIeJpQ4IT4p/NCpS5.fRhnCI0F7fWmUnIW",
-        "point":0
+        "point": 0
     },
     {
         "id": "c91d84bf-ae77-44f0-84e3-f981851dfd2d",
         "username": "Taylor",
         "email": "taylor@gmail.com",
         "password": "$2b$12$igBYQ3owWzFzHSN.XxmoX.2sn5xtXujjHQ0FRwUyKYUnNZRv1Q4IW",
-        "point":0
+        "point": 0
+    },
+    {
+        "id": "390b94a7-b365-44e4-8cf7-b233a73d1ab4",
+        "username": "taghi",
+        "email": "aminhhh@gmail.com",
+        "password": "$2b$12$Z/d1Q..eXzEj8ub8rhvTk.re10NFGDXj6jI4Vc8Z4Nl4Jm8hdvI0O",
+        "point": 0
     }
 ]
