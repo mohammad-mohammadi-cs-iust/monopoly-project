@@ -38,7 +38,7 @@ community_chest_cards = [
 
 def chance_card(player):
     card = random.choice(chance_cards)
-    print(f"{player['name']} draws Chance card: {card['name']}")
+    print(f"{player['username']} draws Chance card: {card['name']}")
 
     if "move_to" in card:
         player["position"] = card["move_to"]
@@ -107,7 +107,7 @@ def chance_card(player):
 
 def community_chest_card(player):
     card = random.choice(community_chest_cards)
-    print(f"{player['name']} draws Community Chest card: {card['name']}")
+    print(f"{player['username']} draws Community Chest card: {card['name']}")
 
     if "move_to" in card:
         player["position"] = card["move_to"]
@@ -176,16 +176,12 @@ def community_chest_card(player):
 
 
 def free_parking(player):
-    print(f"{player['name']} landed on Free Parking. No action.")
+    print(f"{player['username']} landed on Free Parking. No action.")
 
 
 def go_to_jail(player):
-    print(f"{player['name']} landed on Go to Jail and goes directly to Jail!")
+    print(f"{player['username']} landed on Go to Jail and goes directly to Jail!")
     player['prison'] = 1
     player['position']=11
+    
 
-
-def go(player, old_pos, new_pos):
-    if new_pos < old_pos:
-        print(f"{player['name']} passed GO and collected $200.")
-        player["money"] += 200
