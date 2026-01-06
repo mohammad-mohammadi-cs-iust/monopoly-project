@@ -44,16 +44,17 @@ def build_scoreboard():
            current_player.append(item)
            scoreboard.remove(item)
 
+        
+
     return scoreboard,current_player
 
 def run_scoreboard():
     scoreboard,current_player = build_scoreboard()
     print("\n========================== Monopoly Scoreboard ======================\n")
     for i, player in enumerate(scoreboard, 1):
-            print(f"{i}. Username: {player['username']} | Cash: {player['money']} | Player Position:{player['position']} | Assets: {player['assets_name']} | Status: {player['status']} | Prison Status:{player['prison']}")
+            print(f"{i}. Username: {player['username']} | Cash: {player['money']}$ | Player Position:{player['position']} | Assets: {player['assets_name']} | Status: {player['status']} | Prison Status:{player['prison']}")
     
     print("\n========================== Current Turn player ======================\n")
     for player in current_player:
-        print(f"Info: Username: {player['username']} | Cash: {player['money']} | Player Position:{player['position']} | Assets: {player['assets_name']} | Status: {player['status']} | Prison Status:{player['prison']}")
+        print(f"Info: Username: {player['username']} | Cash: {player['money']}$ | Player Position:{player['position']} | Assets: {player['assets_name']} | Status: {player['status']} | Prison Status:{player['prison']}")
 
-run_scoreboard()
