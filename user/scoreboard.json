@@ -1,56 +1,74 @@
 [
     [
-        "Cancelled",
+        "Over",
+        {
+            "player_number": 2,
+            "username": "Newcastle",
+            "money": 170,
+            "assets": [],
+            "position": 14,
+            "prison": 0,
+            "status": "Bankrupt",
+            "total_value": 170,
+            "land_count": 0,
+            "cash": 170,
+            "rank": 1
+        },
+        {
+            "player_number": 3,
+            "username": "Newcastle2",
+            "money": 15,
+            "assets": [
+                "Electric Company",
+                "Kentucky Avenue",
+                "Illinois Avenue",
+                "States Avenue"
+            ],
+            "position": 29,
+            "prison": 0,
+            "status": "Bankrupt",
+            "total_value": 15,
+            "land_count": 0,
+            "cash": 15,
+            "rank": 2
+        },
         {
             "player_number": 1,
             "username": "Taylor",
-            "money": 1500,
-            "assets": [],
-            "position": 1,
+            "money": 5,
+            "assets": [
+                "Tennessee Avenue",
+                "Water Works"
+            ],
+            "position": 18,
             "prison": 0,
-            "status": "In Progress"
+            "status": "Won",
+            "total_value": 5,
+            "land_count": 0,
+            "cash": 5,
+            "rank": 3
         },
         {
-            "player_number": 1,
-            "username": "Newcastle",
-            "money": 1500,
-            "assets": [],
+            "player_number": 4,
+            "username": "Newcastle3",
+            "money": 5,
+            "assets": [
+                "Oriental Avenue",
+                "Virginia Avenue"
+            ],
             "position": 1,
             "prison": 0,
-            "status": "In Progress"
-        },
-        {
-            "player_number": 1,
-            "username": "Newcastle2",
-            "money": 1500,
-            "assets": [],
-            "position": 1,
-            "prison": 0,
-            "status": "In Progress"
-        },
-        {
-            "player_number": 1,
-            "username": "Newcastle4",
-            "money": 1500,
-            "assets": [],
-            "position": 1,
-            "prison": 0,
-            "status": "In Progress"
+            "status": "Bankrupt",
+            "total_value": 5,
+            "land_count": 0,
+            "cash": 5,
+            "rank": 4
         }
     ],
     [
         "Cancelled",
         {
             "player_number": 1,
-            "username": "Newcastle4",
-            "money": 1500,
-            "assets": [],
-            "position": 1,
-            "prison": 0,
-            "status": "In Progress"
-        },
-        {
-            "player_number": 1,
             "username": "Newcastle",
             "money": 1500,
             "assets": [],
@@ -59,8 +77,8 @@
             "status": "In Progress"
         },
         {
-            "player_number": 1,
-            "username": "Taylor",
+            "player_number": 2,
+            "username": "Newcastle2",
             "money": 1500,
             "assets": [],
             "position": 1,
@@ -68,8 +86,17 @@
             "status": "In Progress"
         },
         {
-            "player_number": 1,
-            "username": "Newcastle2",
+            "player_number": 3,
+            "username": "Newcastle3",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 4,
+            "username": "Newcastle4",
             "money": 1500,
             "assets": [],
             "position": 1,

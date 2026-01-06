@@ -40,5 +40,12 @@
         "email": "aminhhh@gmail.com",
         "password": "$2b$12$Z/d1Q..eXzEj8ub8rhvTk.re10NFGDXj6jI4Vc8Z4Nl4Jm8hdvI0O",
         "point": 0
+    },
+    {
+        "id": "242df0a4-2b80-4af3-92ad-e7ec05abacaf",
+        "username": "Amintaha",
+        "email": "Amin@gmail.com",
+        "password": "$2b$12$doX.t3.3nXn7SD0dDvTrqenl0CFjnGp3fK2gvr4Db84DQaMvlxqfS",
+        "point": 0
     }
 ]

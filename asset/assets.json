@@ -1,5 +1,5 @@
 {
-    "2":{
+    "2": {
         "name": "Mediterranean Avenue",
         "color": "Brown",
         "buy_price": 60,
@@ -13,12 +13,11 @@
             160,
             250
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "4":{
+    "4": {
         "name": "Baltic Avenue",
         "color": "Brown",
         "buy_price": 60,
@@ -32,12 +31,11 @@
             320,
             450
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "7":{
+    "7": {
         "name": "Oriental Avenue",
         "color": "LightBlue",
         "buy_price": 100,
@@ -52,10 +50,10 @@
             550
         ],
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "9":{
+    "9": {
         "name": "Vermont Avenue",
         "color": "LightBlue",
         "buy_price": 100,
@@ -69,12 +67,11 @@
             400,
             550
         ],
-
-        "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "owner": "Newcastle",
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "10":{
+    "10": {
         "name": "Connecticut Avenue",
         "color": "LightBlue",
         "buy_price": 120,
@@ -88,12 +85,11 @@
             450,
             600
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "12":{
+    "12": {
         "name": "St.Charles Place",
         "color": "Pink",
         "buy_price": 140,
@@ -108,10 +104,10 @@
             750
         ],
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "14":{
+    "14": {
         "name": "States Avenue",
         "color": "Pink",
         "buy_price": 140,
@@ -125,12 +121,11 @@
             625,
             750
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "15":{
+    "15": {
         "name": "Virginia Avenue",
         "color": "Pink",
         "buy_price": 160,
@@ -144,12 +139,11 @@
             700,
             900
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "17":{
+    "17": {
         "name": "St. James Place",
         "color": "Orange",
         "buy_price": 180,
@@ -163,12 +157,11 @@
             750,
             950
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "19":{
+    "19": {
         "name": "Tennessee Avenue",
         "color": "Orange",
         "buy_price": 180,
@@ -182,12 +175,11 @@
             750,
             950
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "20":{
+    "20": {
         "name": "New York Avenue",
         "color": "Orange",
         "buy_price": 200,
@@ -201,12 +193,11 @@
             800,
             1000
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "22":{
+    "22": {
         "name": "Kentucky Avenue",
         "color": "Red",
         "buy_price": 220,
@@ -220,12 +211,11 @@
             875,
             1050
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "24":{
+    "24": {
         "name": "Indiana Avenue",
         "color": "Red",
         "buy_price": 220,
@@ -239,12 +229,11 @@
             875,
             1050
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "25":{
+    "25": {
         "name": "Illinois Avenue",
         "color": "Red",
         "buy_price": 240,
@@ -258,12 +247,11 @@
             925,
             1100
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "27":{
+    "27": {
         "name": "Atlantic Avenue",
         "color": "Yellow",
         "buy_price": 260,
@@ -277,12 +265,11 @@
             975,
             1150
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "28":{
+    "28": {
         "name": "Ventnor Avenue",
         "color": "Yellow",
         "buy_price": 260,
@@ -296,12 +283,11 @@
             975,
             1150
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "30":{
+    "30": {
         "name": "Marvin Gardens",
         "color": "Yellow",
         "buy_price": 280,
@@ -315,12 +301,11 @@
             1025,
             1200
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "32":{
+    "32": {
         "name": "Pacific Avenue",
         "color": "Green",
         "buy_price": 300,
@@ -334,12 +319,11 @@
             1100,
             1275
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "33":{
+    "33": {
         "name": "North Carolina Avenue",
         "color": "Green",
         "buy_price": 300,
@@ -354,10 +338,10 @@
             1275
         ],
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "35":{
+    "35": {
         "name": "Pennsylvania Avenue",
         "color": "Green",
         "buy_price": 320,
@@ -371,12 +355,11 @@
             1200,
             1400
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "38":{
+    "38": {
         "name": "Park Place",
         "color": "DarkBlue",
         "buy_price": 350,
@@ -390,12 +373,11 @@
             1300,
             1500
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "40":{
+    "40": {
         "name": "Boardwalk",
         "color": "DarkBlue",
         "buy_price": 400,
@@ -409,77 +391,78 @@
             1700,
             2000
         ],
-
         "owner": "",
-        "house_num":0,
-        "hotel_num":0
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "6":{
+    "6": {
         "name": "Reading RailRoad",
         "buy_price": 200,
         "owner": ""
     },
-    "16":{
+    "16": {
         "name": "Pennsylvania RailRoad",
         "buy_price": 200,
         "owner": ""
     },
-    "26":{
+    "26": {
         "name": "B&O RailRoad",
         "buy_price": 200,
         "owner": ""
     },
-    "36":{
+    "36": {
         "name": "Short Line RailRoad",
         "buy_price": 200,
         "owner": ""
     },
-    "13":{
+    "13": {
         "name": "Electric Company",
         "buy_price": 150,
-        "owner": ""
+        "owner": "",
+        "house_num": 0,
+        "hotel_num": 0
     },
-    "29":{
+    "29": {
         "name": "Water Works",
         "buy_price": 150,
         "owner": ""
     },
-    "1":{
+    "1": {
         "name": "GO"
     },
-    "3":{
+    "3": {
         "name": "Community Chest"
     },
-    "18":{
+    "18": {
         "name": "Community Chest"
     },
-    "34":{
+    "34": {
         "name": "Community Chest"
     },
-    "8":{
+    "8": {
         "name": "Chance"
     },
-    "23":{
+    "23": {
         "name": "Chance"
     },
-    "37":{
+    "37": {
         "name": "Chance"
     },
-    "5":{
+    "5": {
         "name": "Income Tax",
         "amount": 200
     },
-    "39":{
+    "39": {
         "name": "Luxury Tax",
         "amount": 100
     },
-    "11":{
+    "11": {
         "name": "Jail"
     },
-    "21":{
+    "21": {
         "name": "Free Parking"
     },
-    "31":{
+    "31": {
         "name": "Go To Jail"
     }
 }
