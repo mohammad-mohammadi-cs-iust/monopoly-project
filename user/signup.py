@@ -137,21 +137,25 @@ def header_box(text, width=32):
     print("*" + text.center(width - 2) + "*")
     print("*" * width)
 
-header_box("SIGN UP")
 
 
-while True:
-    create_user()
 
+def run_signup():
+    header_box("SIGN UP")
     while True:
-        answer=input("\nDo you want to still continue? (yes/no):").strip()
-        if(answer=="yes" or answer=="no"):
-            break
-        else:
-            continue
-        
-    if(answer=="yes"):
-        continue
+        create_user()
 
-    else:
-        break
+        while True:
+            answer=input("\nDo you want to still continue? (yes/no):").strip()
+            if(answer=="yes" or answer=="no"):
+                break
+            else:
+                continue
+            
+        if(answer=="yes"):
+            print("\n\n")
+            continue
+
+        else:
+            break
+            
