@@ -40,68 +40,54 @@ def sell_properties():
     players, player, player_index = get_current_player()
     assets = load_assets()
 
-    username = player["username"]
-    print("\nHere are your assets that you can sell:\n")
+    player_backup = player.copy()
+    assets_backup = {k: v.copy() for k, v in assets.items()}
 
+    username = player["username"]
     user_assets = {}
 
     for position, asset in assets.items():
         if asset.get("owner") == username and "buy_price" in asset:
             buy_price = asset["buy_price"]
-            sell_price = buy_price // 2
-
-            if(asset.get("house_num") or asset.get("hotel_num")):
-                house=asset.get("house_num",0)
-                hotel=asset.get("hotel_num",0)
-
-                if(house > 0):
-                   sell_price+=(asset.get("house_creating")//2)*house
-
-                if(hotel==1 and house==0):
-                    sell_price+=(asset.get("hotel_creating")//2)*hotel
-
+            house_num = asset.get("house_num", 0)
+            hotel_num = asset.get("hotel_num", 0)
+            house_creating = asset.get("house_creating", 0)
+            hotel_creating = asset.get("hotel_creating", 0)
+            total_spent = buy_price + (house_num * house_creating) + (hotel_num * hotel_creating)
+            sell_price = total_spent // 2
             user_assets[str(position)] = sell_price
 
-            
-            if(asset.get("house_num") or asset.get("hotel_num")):
-
-                print(
-                    f"- Position {position} | {asset['name']} | House num:{asset['house_num']} | Hotel num:{asset['hotel_num']}"
-                    f"Buy price: {buy_price}$ | Sell price: {sell_price}$"
-                )
-
+            if house_num or hotel_num:
+                print(f"- Position {position} | {asset['name']} | House num: {house_num} | Hotel num: {hotel_num} | Buy price: {buy_price}$ | Sell price: {sell_price}$")
             else:
-                print(
-                    f"- Position {position} | {asset['name']} |"
-                    f"Buy price: {buy_price}$ | Sell price: {sell_price}$"
-                )
+                print(f"- Position {position} | {asset['name']} | Buy price: {buy_price}$ | Sell price: {sell_price}$")
 
     if not user_assets:
         print("You don't own any assets to sell.")
         return
 
-    while True:
+    while user_assets:
         print(f"\nCurrent Money: {player['money']}$")
-        prompt = input("Which one do you want to sell? type it's position: ").strip()
+        print("Type 'cancel' if you don't want to sell anything.")
+        prompt = input("Which one do you want to sell? Type its position: ").strip()
+
+        if prompt.lower() == "cancel":
+            print("✔ You chose not to sell any assets.")
+            players[player_index] = player_backup
+            save_players(players)
+            save_assets(assets_backup)
+            return
 
         if prompt not in user_assets:
             print("The position you typed is not in your assets. Please try again.")
             continue
 
-
         player["money"] += user_assets[prompt]
-
         if assets[prompt]["name"] in player["assets"]:
             player["assets"].remove(assets[prompt]["name"])
-
         assets[prompt]["owner"] = ""
-
-        if "house_num" in assets[prompt]:
-            assets[prompt]["house_num"] = 0
-
-        if "hotel_num" in assets[prompt]:
-            assets[prompt]["hotel_num"] = 0
-
+        assets[prompt]["house_num"] = 0
+        assets[prompt]["hotel_num"] = 0
 
         players[player_index] = player
         save_players(players)
@@ -114,22 +100,16 @@ def sell_properties():
         if not user_assets:
             print("You have no more assets to sell.")
             break
-        
+
         print(f"\n💰 Current money: {player['money']}$")
 
         while True:
-            answer=input("Do you want to continue (yes/no):").strip().lower()
-
-            if(answer=='yes' or answer=='no'):
+            answer = input("Do you want to continue selling (yes/no)? ").strip().lower()
+            if answer in ("yes", "no"):
                 break
-            else:
-                continue
-        
-        if(answer=="no"):
+        if answer == "no":
             break
 
-        else:
-            continue
 
 
 
