@@ -58,46 +58,49 @@ def show_username(logged_in_player):
     players=load_players()
     return players[logged_in_player+1]["username"]
 
+def run_loadgame():
+    logged_in_player = 1
+    TOTAL_PLAYERS = 4
 
-logged_in_player = 1
-TOTAL_PLAYERS = 4
+    header_box("Load Game")
 
-header_box("Load Game")
-
-if not load_users() or not load_players():
-    print(
-        "Sorry but there is no in progress game in database "
-        "please go to login section and start a new game."
-    )
+    if not load_users() or not load_players():
+        print(
+            "Sorry but there is no in progress game in database "
+            "please go to login section and start a new game."
+        )
+        input("Press any key to return to menu...")
 
 
-else:
-    while logged_in_player <= TOTAL_PLAYERS:
-        header_box(f"Player {logged_in_player}")
 
-        username = show_username(logged_in_player)
-        print("Username:", username)
+    else:
+        while logged_in_player <= TOTAL_PLAYERS:
+            header_box(f"Player {logged_in_player}")
 
-        if not check_password(username):
-            break
+            username = show_username(logged_in_player)
+            print("Username:", username)
 
-        logged_in_player += 1
+            if not check_password(username):
+                break
 
-        while True:
-            answer = input("\nDo you want to continue? (yes/no): ").strip().lower()
-            if answer in ("yes", "no"):
+            logged_in_player += 1
+
+            while True:
+                answer = input("\nDo you want to continue? (yes/no): ").strip().lower()
+                if answer in ("yes", "no"):
+                    break
+
+
+            
+            if answer == "no":
+                print("Loading Game Cancelled....")
                 break
 
 
-        
-        if answer == "no":
-            print("Loading Game Cancelled....")
-            break
+            if logged_in_player > TOTAL_PLAYERS:
+                print("\nAll players logged in successfully!")
+                input("\nPress any key to continue the previous game...")
 
-
-        if logged_in_player > TOTAL_PLAYERS:
-            print("\nAll players logged in successfully!")
-            print("\nContinuing the previous game...")
-            break
+                break
 
    
