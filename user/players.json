@@ -1,0 +1,56 @@
+[
+    "In Progress",
+    {
+        "current_turn": 3
+    },
+    {
+        "player_number": 1,
+        "username": "Newcastle",
+        "money": 960,
+        "assets": [
+            "Reading RailRoad",
+            "Connecticut Avenue",
+            "Kentucky Avenue"
+        ],
+        "position": 11,
+        "prison": 1,
+        "status": "In Progress"
+    },
+    {
+        "player_number": 2,
+        "username": "Newcastle2",
+        "money": 185,
+        "assets": [
+            "St. James Place",
+            "Atlantic Avenue"
+        ],
+        "position": 37,
+        "prison": 0,
+        "status": "In Progress"
+    },
+    {
+        "player_number": 3,
+        "username": "Newcastle3",
+        "money": 960,
+        "assets": [
+            "Oriental Avenue",
+            "Vermont Avenue",
+            "States Avenue",
+            "New York Avenue"
+        ],
+        "position": 28,
+        "prison": 0,
+        "status": "In Progress"
+    },
+    {
+        "player_number": 4,
+        "username": "Newcastle4",
+        "money": 1300,
+        "assets": [
+            "Baltic Avenue"
+        ],
+        "position": 19,
+        "prison": 0,
+        "status": "In Progress"
+    }
+]

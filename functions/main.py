@@ -43,64 +43,116 @@ def player_turn():
         print(f"\n\n\n--- Current Turn: Player {player['player_number']} Username: {player['username']} ---")
 
         if player['prison'] > 0:
-            manage_prison()
-
+            prison_result = manage_prison()
             players, player, index = get_current_player()
 
-            if player['status'] == "Bankrupt":
+            if prison_result == "rolled":
+                dest_block = get_current_block(player)
+
+                if dest_block and dest_block.get('name') in ['Chance', 'Community Chest']:
+                    if dest_block['name'] == 'Chance':
+                        chance_card(players, player, index)
+                    else:
+                        community_chest_card(players, player, index)
+
+                elif dest_block and 'buy_price' in dest_block and dest_block.get('owner', '') == "":
+                    ownership()
+
+                elif dest_block and dest_block.get('owner', '') not in ("", player['username']):
+                    resolve_bankrupt(player['position'], 0)
+
+                elif dest_block and dest_block.get('name') in ['Income Tax', 'Luxury Tax']:
+                    amount = dest_block.get('amount', 0)
+                    if player['money'] >= amount:
+                        player['money'] -= amount
+                        players[index] = player
+                        save_players(players)
+                    else:
+                        resolve_bankrupt(player['position'], 0)
+
+                elif dest_block and dest_block.get('name') == 'Go To Jail':
+                    go_to_jail(players, player, index)
+
+                build_houses_and_hotels()
+                sell_properties()
+                turn_over = True
+                continue
+
+            if prison_result == "stay":
+                turn_over = True
+                continue
+
+            if prison_result in ("paid", "freed"):
+                input("You are free now. Press Enter to roll dice.")
+                continue
+
+            if prison_result == "bankrupt":
                 turn_over = True
                 continue
 
 
 
-            elif player['prison'] > 0:
-                turn_over = True
-                continue
-
-            elif player['prison']==0:
-                input("\n\nTo roll a dice to move please press a key....")
-                continue
 
 
 
 
-        sell_properties()
-        input("Press Enter to roll dice...")
-        total_dice, dice_1, dice_2 = dice()
-        print(f"Dice rolled: {dice_1} and {dice_2}, total: {total_dice}")
 
-        players, player, index = get_current_player()
-        old_pos = player['position']
-        new_pos = (player['position'] + total_dice) % 40
-        
-        if new_pos == 0:
-            new_pos = 40
+        else:
+            sell_properties()
+            input("Press Enter to roll dice...")
+            total_dice, dice_1, dice_2 = dice()
+            print(f"Dice rolled: {dice_1} and {dice_2}, total: {total_dice}")
 
-        player['position'] = new_pos
-        players[index] = player
-        save_players(players)
-        dest_block = get_current_block(player)
-        dest_name = dest_block.get("name") if dest_block else "Unknown"
-        print(f"You will land on: Position {new_pos} - {dest_name}")
+            players, player, index = get_current_player()
+            old_pos = player['position']
+            new_pos = (player['position'] + total_dice) % 40
+            
+            if new_pos == 0:
+                new_pos = 40
 
-        if new_pos < old_pos:
-            print("\n You passed go , collect 200$.\n")
-            player["money"] += 200
+            player['position'] = new_pos
             players[index] = player
             save_players(players)
-
-        if dest_block and dest_block.get('name') in ['Chance', 'Community Chest']:
-            if dest_block['name'] == 'Chance':
-                chance_card(players, player, index)
-            else:
-                community_chest_card(players, player, index)
-
-            players, player, index = get_current_player()
             dest_block = get_current_block(player)
             dest_name = dest_block.get("name") if dest_block else "Unknown"
-            print(f"\nAfter card effect, you are now at Position {player['position']} - {dest_name}")
+            print(f"You will land on: Position {new_pos} - {dest_name}")
 
-            if player['prison'] == 0:
+            if new_pos < old_pos:
+                print("\n You passed go , collect 200$.\n")
+                player["money"] += 200
+                players[index] = player
+                save_players(players)
+
+            if dest_block and dest_block.get('name') in ['Chance', 'Community Chest']:
+                if dest_block['name'] == 'Chance':
+                    chance_card(players, player, index)
+                else:
+                    community_chest_card(players, player, index)
+
+                players, player, index = get_current_player()
+                dest_block = get_current_block(player)
+                dest_name = dest_block.get("name") if dest_block else "Unknown"
+                print(f"\nAfter card effect, you are now at Position {player['position']} - {dest_name}")
+
+                if player['prison'] == 0:
+                    if dest_block and 'buy_price' in dest_block and dest_block.get('owner','') == "":
+                        ownership()
+                    elif dest_block and 'owner' in dest_block and dest_block.get('owner','') not in ("", player['username']):
+                        resolve_bankrupt(player['position'], total_dice)
+                    elif dest_block and dest_block.get('name') in ['Income Tax', 'Luxury Tax']:
+                        amount = dest_block.get('amount', 0)
+                        if player['money'] >= amount:
+                            player['money'] -= amount
+
+                            print(f"\n {amount}$ paid for "+dest_block['name']+".")
+                            players[index] = player
+                            save_players(players)
+                        else:
+                            resolve_bankrupt(player['position'], total_dice)
+                    elif dest_block and dest_block.get('name') == 'Go To Jail':
+                        go_to_jail(players, player, index)
+
+            else:
                 if dest_block and 'buy_price' in dest_block and dest_block.get('owner','') == "":
                     ownership()
                 elif dest_block and 'owner' in dest_block and dest_block.get('owner','') not in ("", player['username']):
@@ -109,8 +161,6 @@ def player_turn():
                     amount = dest_block.get('amount', 0)
                     if player['money'] >= amount:
                         player['money'] -= amount
-
-                        print(f"\n {amount}$ paid for "+dest_block['name']+".")
                         players[index] = player
                         save_players(players)
                     else:
@@ -118,46 +168,30 @@ def player_turn():
                 elif dest_block and dest_block.get('name') == 'Go To Jail':
                     go_to_jail(players, player, index)
 
-        else:
-            if dest_block and 'buy_price' in dest_block and dest_block.get('owner','') == "":
-                ownership()
-            elif dest_block and 'owner' in dest_block and dest_block.get('owner','') not in ("", player['username']):
-                resolve_bankrupt(player['position'], total_dice)
-            elif dest_block and dest_block.get('name') in ['Income Tax', 'Luxury Tax']:
-                amount = dest_block.get('amount', 0)
-                if player['money'] >= amount:
-                    player['money'] -= amount
+            build_houses_and_hotels()
+            sell_properties()
+            players, player, index = get_current_player()
+            players[index] = player
+            save_players(players)
+
+            if dice_1 == dice_2:
+                repeat_dice += 1
+                if repeat_dice < 3:
+                    print("\nYou had "+str(repeat_dice)+"double")
+
+                    input("Press Enter to roll the dice again...")
+                else:
+                    print("\n Because you had 3 doubles you are going to the Jail on block 31..")
+                    players, player, index = get_current_player()
+                    player['prison'] = 1
+                    player['position'] = 11
+                    repeat_dice = 0
                     players[index] = player
                     save_players(players)
-                else:
-                    resolve_bankrupt(player['position'], total_dice)
-            elif dest_block and dest_block.get('name') == 'Go To Jail':
-                go_to_jail(players, player, index)
-
-        build_houses_and_hotels()
-        sell_properties()
-        players, player, index = get_current_player()
-        players[index] = player
-        save_players(players)
-
-        if dice_1 == dice_2:
-            repeat_dice += 1
-            if repeat_dice < 3:
-                print("\nYou had "+str(repeat_dice)+"double")
-
-                input("Press Enter to roll the dice again...")
+                    turn_over = True
             else:
-                print("\n Because you had 3 doubles you are going to the Jail on block 31..")
-                players, player, index = get_current_player()
-                player['prison'] = 1
-                player['position'] = 11
                 repeat_dice = 0
-                players[index] = player
-                save_players(players)
                 turn_over = True
-        else:
-            repeat_dice = 0
-            turn_over = True
 
     return repeat_dice == 0
 

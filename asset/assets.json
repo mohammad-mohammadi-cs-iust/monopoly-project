@@ -157,7 +157,7 @@
             750,
             950
         ],
-        "owner": "",
+        "owner": "Newcastle2",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -211,7 +211,7 @@
             875,
             1050
         ],
-        "owner": "",
+        "owner": "Newcastle4",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -265,7 +265,7 @@
             975,
             1150
         ],
-        "owner": "",
+        "owner": "Newcastle2",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -427,7 +427,9 @@
     "29": {
         "name": "Water Works",
         "buy_price": 150,
-        "owner": ""
+        "owner": "",
+        "house_num": 0,
+        "hotel_num": 0
     },
     "1": {
         "name": "GO"
