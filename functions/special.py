@@ -77,7 +77,7 @@ def chance_card(players, player, index):
         if player["money"] + amount >= 0:
             player["money"] += amount
         else:
-            sell_properties_to_resolve_bankrupt(abs(amount))
+            sell_properties_to_resolve_bankrupt(players, player, index,abs(amount))
 
             if player["money"] + amount >= 0:
                 player["money"] += amount
@@ -140,7 +140,7 @@ def community_chest_card(players, player, index):
         if player["money"] + amount >= 0:
             player["money"] += amount
         else:
-            sell_properties_to_resolve_bankrupt(abs(amount))
+            sell_properties_to_resolve_bankrupt(players, player, index,abs(amount))
 
             if player["money"] + amount >= 0:
                 player["money"] += amount

@@ -44,18 +44,25 @@ def player_turn():
 
         if player['prison'] > 0:
             manage_prison()
+
             players, player, index = get_current_player()
+
             if player['status'] == "Bankrupt":
                 turn_over = True
                 continue
-            if player['prison'] > 0:
-                player['prison']+=1
-                players[index]=player
-                save_players(players)
-                sell_properties()
-                build_houses_and_hotels()
+
+
+
+            elif player['prison'] > 0:
                 turn_over = True
                 continue
+
+            elif player['prison']==0:
+                input("\n\nTo roll a dice to move please press a key....")
+                continue
+
+
+
 
         sell_properties()
         input("Press Enter to roll dice...")
@@ -77,6 +84,7 @@ def player_turn():
         print(f"You will land on: Position {new_pos} - {dest_name}")
 
         if new_pos < old_pos:
+            print("\n You passed go , collect 200$.\n")
             player["money"] += 200
             players[index] = player
             save_players(players)
@@ -101,6 +109,8 @@ def player_turn():
                     amount = dest_block.get('amount', 0)
                     if player['money'] >= amount:
                         player['money'] -= amount
+
+                        print(f"\n {amount}$ paid for "+dest_block['name']+".")
                         players[index] = player
                         save_players(players)
                     else:
@@ -137,6 +147,7 @@ def player_turn():
 
                 input("Press Enter to roll the dice again...")
             else:
+                print("\n Because you had 3 doubles you are going to the Jail on block 31..")
                 players, player, index = get_current_player()
                 player['prison'] = 1
                 player['position'] = 11

@@ -114,8 +114,7 @@ def sell_properties():
 
 
 
-def sell_properties_to_resolve_bankrupt(debt):
-    players, player, player_index = get_current_player()
+def sell_properties_to_resolve_bankrupt(players, player, player_index,debt):
     assets = load_assets()
     username = player["username"]
 
@@ -136,6 +135,21 @@ def sell_properties_to_resolve_bankrupt(debt):
 
     if total_value + player["money"] < debt:
         print("❌ You cannot pay the debt even if you sell all assets. BANKRUPT!")
+
+        player["money"] = 0
+        player["status"] = "Bankrupt"
+        player["assets"] = []
+
+        for asset in assets.values():
+            if asset.get("owner") == username:
+                asset["owner"] = ""
+                asset["house_num"] = 0
+                asset["hotel_num"] = 0
+
+        players[player_index] = player
+        save_players(players)
+        save_assets(assets)
+        
         return False
 
     if not user_assets:
@@ -159,7 +173,9 @@ def sell_properties_to_resolve_bankrupt(debt):
             continue
 
 
-        player["money"] += user_assets[prompt]
+        sold_price = user_assets[prompt]
+        player["money"] += sold_price
+
         if assets[prompt]["name"] in player.get("assets", []):
             player["assets"].remove(assets[prompt]["name"])
         assets[prompt]["owner"] = ""
@@ -168,9 +184,16 @@ def sell_properties_to_resolve_bankrupt(debt):
 
         del user_assets[prompt]
 
+        players[player_index] = player
         save_players(players)
+
+
         save_assets(assets)
-        print(f"✔ Sold {assets[prompt]['name']} for {player['money']}$")
+        print(f"✔ Sold {assets[prompt]['name']} for {sold_price}$")
+
+    players[player_index]=player
+
+    save_players(players)
 
     return player["money"] >= debt
 
@@ -215,7 +238,7 @@ def resolve_bankrupt(position, dice):
 
     if player["money"] < rent:
         print(f"⚠ You need {rent}$ but have only {player['money']}$")
-        result = sell_properties_to_resolve_bankrupt(rent)
+        result = sell_properties_to_resolve_bankrupt(players,player,player_index,rent)
         if not result:
 
             print(f"\n☠ {player['username']} is BANKRUPT!")

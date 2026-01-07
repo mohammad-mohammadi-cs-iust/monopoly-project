@@ -9,7 +9,6 @@ BASE_DIR2= os.path.dirname(os.path.dirname(__file__))
 file_path = os.path.join(BASE_DIR, "users.json")
 scoreboard_path= os.path.join(BASE_DIR, "scoreboard.json")
 assets_path= os.path.join(BASE_DIR2, "asset","assets.json")
-print(assets_path)
 
 
 players_buffer = []
