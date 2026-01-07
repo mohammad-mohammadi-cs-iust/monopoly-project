@@ -1,5 +1,5 @@
 import random
-from functions.finance import sell_properties_to_resolve_bankrupt,load_assets,save_assets
+from functions.finance import sell_properties_to_resolve_bankrupt,load_assets,save_assets,save_players
 
 chance_cards = [
     {"name": "Advance to GO", "description": "Move to GO and collect $200", "move_to": 1, "money": 200},
@@ -36,152 +36,142 @@ community_chest_cards = [
 
 
 
-def chance_card(player):
+def chance_card(players, player, index):
     card = random.choice(chance_cards)
     print(f"{player['username']} draws Chance card: {card['name']}")
 
+    start_position = player["position"]
+
+
     if "move_to" in card:
         player["position"] = card["move_to"]
+
+
+    elif "nearest" in card:
+        if card["nearest"] == "Utility":
+            options = [13, 29]
+        else:
+            options = [6, 16, 26, 36]
+
+        distances = [(o - start_position) % 40 for o in options]
+        new_pos = options[distances.index(min(distances))]
+
+        player["position"] = new_pos
+
+
     if "move_back" in card:
         player["position"] = (player["position"] - card["move_back"]) % 40
 
+
     if "money" in card:
+        amount = card["money"]
 
-        if(card['money'] > 0):
-           player["money"] += card["money"]
-
-        elif(card['money'] < 0 and player['money']+card['money'] >=0):
-            player["money"] += card["money"]
-        
+        if player["money"] + amount >= 0:
+            player["money"] += amount
         else:
-            sell_properties_to_resolve_bankrupt(abs(card['money']))
+            sell_properties_to_resolve_bankrupt(abs(amount))
 
-            if(player['money']+card['money']>=0):
-                player["money"] +=card['money']
-                print("The task of chance Card has done successfully!!")
-
+            if player["money"] + amount >= 0:
+                player["money"] += amount
             else:
-                assets=load_assets()
+                assets = load_assets()
                 print(f"\n☠ {player['username']} is BANKRUPT!")
 
                 for asset in assets.values():
                     if asset.get("owner") == player["username"]:
                         asset["owner"] = ""
-
-                    if(asset.get('house_num') or asset.get('hotel_num')):
-                        asset['house_num']=0
-                        asset['hotel_num']=0
-                
+                        asset["house_num"] = 0
+                        asset["hotel_num"] = 0
 
                 player["money"] = 0
                 player["status"] = "Bankrupt"
                 player["assets"] = []
-
                 save_assets(assets)
 
 
+    if card.get("get_out_of_jail"):
+        if "get_out_of_jail" not in player["assets"]:
+            player["assets"].append("get_out_of_jail")
 
-    if "get_out_of_jail" in card:
-        player["assets"].append("get_out_of_jail")
-
-    if "prison" in card and card["prison"] == 1:
+    if card.get("prison") == 1:
         player["position"] = 11
         player["prison"] = 1
 
-
-    if "nearest" in card:
-        if card["nearest"] == "Utility":
-            options = [13, 29]
-            
-        else:
-            options = [6, 16, 26, 36]
-
-        old_pos = player["position"]
-        distances = [(o - player["position"]) % 40 for o in options]
-        player["position"] = options[distances.index(min(distances))]
-
-        if player["position"] < old_pos:
-           player["money"] += 200
+    players[index] = player
+    save_players(players)
 
     return card
 
-def community_chest_card(player):
+
+
+def community_chest_card(players, player, index):
     card = random.choice(community_chest_cards)
     print(f"{player['username']} draws Community Chest card: {card['name']}")
 
+    start_position = player["position"]
+
+
     if "move_to" in card:
         player["position"] = card["move_to"]
+
+        if player["position"] < start_position:
+            player["money"] += 200
+
 
     if "move_back" in card:
         player["position"] = (player["position"] - card["move_back"]) % 40
 
+
     if "money" in card:
-        
-        if(card['money'] > 0):
-           player["money"] += card["money"]
+        amount = card["money"]
 
-        elif(card['money'] < 0 and player['money']+card['money'] >=0):
-            player["money"] += card["money"]
-        
+        if player["money"] + amount >= 0:
+            player["money"] += amount
         else:
-            sell_properties_to_resolve_bankrupt(abs(card['money']))
+            sell_properties_to_resolve_bankrupt(abs(amount))
 
-            if(player['money']+card['money']>=0):
-                player["money"] +=card['money']
-                print("The task of chance Card has done successfully!!")
-
+            if player["money"] + amount >= 0:
+                player["money"] += amount
+                print("Community Chest card resolved successfully.")
             else:
-                assets=load_assets()
+                assets = load_assets()
                 print(f"\n☠ {player['username']} is BANKRUPT!")
 
                 for asset in assets.values():
                     if asset.get("owner") == player["username"]:
                         asset["owner"] = ""
-
-                    if(asset.get('house_num') or asset.get('hotel_num')):
-                        asset['house_num']=0
-                        asset['hotel_num']=0
-                
+                        asset["house_num"] = 0
+                        asset["hotel_num"] = 0
 
                 player["money"] = 0
                 player["status"] = "Bankrupt"
                 player["assets"] = []
-
                 save_assets(assets)
 
 
-    if "get_out_of_jail" in card:
-        player["assets"].append("get_out_of_jail")
+    if card.get("get_out_of_jail"):
+        if "get_out_of_jail" not in player["assets"]:
+            player["assets"].append("get_out_of_jail")
 
-    if "prison" in card and card["prison"] == 1:
+    if card.get("prison") == 1:
         player["position"] = 11
         player["prison"] = 1
 
-    if "nearest" in card:
-        if card["nearest"] == "Utility":
-            options = [13, 29]
-            
-        else:
-            options = [6, 16, 26, 36]
-
-        old_pos = player["position"]
-        distances = [(o - player["position"]) % 40 for o in options]
-        player["position"] = options[distances.index(min(distances))]
-
-        if player["position"] < old_pos:
-           player["money"] += 200
+    players[index] = player
+    save_players(players)
 
     return card
+
 
 
 
 def free_parking(player):
-    print(f"{player['username']} landed on Free Parking. No action.")
+    print(f"\n{player['username']} landed on Free Parking. No action.")
 
 
-def go_to_jail(player):
+def go_to_jail(players, player, index):
     print(f"{player['username']} landed on Go to Jail and goes directly to Jail!")
     player['prison'] = 1
     player['position']=11
-    
-
+    players[index]=player
+    save_players(players)

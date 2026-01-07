@@ -53,13 +53,16 @@ def player_turn():
                 build_houses_and_hotels()
                 turn_over = True
                 continue
+
+
+        print("\n\n") 
         
-        print("\n\n")
         print("------- Before rolling dice selling properties--------\n")
+
         sell_properties()
+        
 
-        print("\n\n")
-
+        print("\n\n") 
 
         input("Press Enter to roll dice...")
         total_dice, dice_1, dice_2 = dice()
@@ -78,17 +81,18 @@ def player_turn():
         if new_pos < old_pos:
             print(f"\nYou passed GO and collected $200.")
             player["money"] += 200
-            players[index]=player
+            players[index] = player
             save_players(players)
-
 
         if dest_block and dest_block.get('name') in ['Chance', 'Community Chest']:
             if dest_block['name'] == 'Chance':
-                chance_card(player)
+                chance_card(players, player, index)
             else:
-                community_chest_card(player)
+                community_chest_card(players, player, index)
             players, player, index = get_current_player()
             dest_block = get_current_block(player)
+            dest_name = dest_block.get("name") if dest_block else "Unknown"
+            print(f"\nAfter card effect, you are now at Position {player['position']} - {dest_name}")
 
         if dest_block and 'buy_price' in dest_block and dest_block.get('owner','') == "":
             ownership()
@@ -99,27 +103,25 @@ def player_turn():
             players, player, index = get_current_player()
             if player['money'] >= amount:
                 player['money'] -= amount
-
                 print(f"\n${amount}$ money paid from your account for "+dest_block.get("name"))
-
                 players[index] = player
                 save_players(players)
             else:
                 print(f"\n$You don't have enough money to pay {amount}$ for "+dest_block.get("name"))
-
                 resolve_bankrupt(player['position'], total_dice)
         elif dest_block and dest_block.get('name') == 'Go To Jail':
-            go_to_jail(player)
+            go_to_jail(players, player, index)
 
         build_houses_and_hotels()
+
+
+        print("\n\n") 
         
-        
-        print("\n\n")
         print("------- After rolling dice selling properties--------\n")
         sell_properties()
+        print("\n\n") 
 
-        print("\n\n")
-
+        
         players, player, index = get_current_player()
         players[index] = player
         save_players(players)
@@ -127,7 +129,9 @@ def player_turn():
         if dice_1 == dice_2:
             repeat_dice += 1
             if repeat_dice < 3:
-                print(f"\nDoubles rolled! This is double number {repeat_dice}, you get another turn...")
+                print(f"\n🎲 Doubles rolled! This is double number {repeat_dice}.")
+                print("Your turn continues! Roll the dice again when ready...\n")
+                input("Press Enter to roll the dice again...")
             else:
                 print("\nRolled doubles three times! Going to jail.")
                 players, player, index = get_current_player()
@@ -142,6 +146,7 @@ def player_turn():
             turn_over = True
 
     return repeat_dice == 0
+
 
 
 def run_game():
