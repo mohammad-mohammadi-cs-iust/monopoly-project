@@ -87,6 +87,7 @@ def player_turn():
                 continue
 
             if prison_result == "bankrupt":
+                print(f"\n☠ {player['username']} is BANKRUPT!")
                 turn_over = True
                 continue
 

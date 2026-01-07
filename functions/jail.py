@@ -7,12 +7,25 @@ from functions.finance import (
     sell_properties_to_resolve_bankrupt,
 )
 
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PLAYERS_FILE = os.path.join(BASE_DIR, "user", "players.json")
+ASSETS_FILE = os.path.join(BASE_DIR, "asset", "assets.json")
+
+
+def load_assets():
+    with open(ASSETS_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+    
+def save_assets(assets):
+    with open(ASSETS_FILE, "w", encoding="utf-8") as f:
+        json.dump(assets, f, indent=4)
+
 def normalize_position(pos):
     pos = pos % 40
     return 40 if pos == 0 else pos
 
 
-JAIL_FREE_CARD = "Get Out Of Jail Free"
+JAIL_FREE_CARD = "get_out_of_jail"
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 players_path = os.path.join(BASE_DIR, "user", "players.json")
@@ -21,6 +34,29 @@ players_path = os.path.join(BASE_DIR, "user", "players.json")
 def load_players():
     with open(players_path, "r", encoding="utf-8") as f:
         return json.load(f)
+    
+def declare_bankruptcy(players, player, index):
+    player["status"] = "Bankrupt"
+    player["money"] = 0
+    players[index] = player
+
+    assets = load_assets()
+    username = player["username"]
+    for pos, asset in assets.items():
+
+        if(asset.get("name") in player['assets']):
+            player['assets'].remove(asset.get("name"))
+
+        if asset.get("owner") == username:
+            asset["owner"] = ""
+            asset["house_num"] = 0
+            asset["hotel_num"] = 0
+            assets[pos] = asset
+
+    save_players(players)
+    save_assets(assets)
+    print(f"\n☠ {username} is BANKRUPT! All assets returned to the bank.")
+
 
 
 def get_current_player():
@@ -47,20 +83,30 @@ def get_free_from_jail_card(players, player, index):
 
 
 def try_to_get_double(players, player, index):
-    dice1 = random.randint(1, 6)
-    dice2 = random.randint(1, 6)
+    attempts = 0
 
-    print(f"🎲 Dice rolled: {dice1} and {dice2}")
+    while attempts < 3:
+        dice1 = random.randint(1, 6)
+        dice2 = random.randint(1, 6)
+        print(f"\n🎲 Dice rolled: {dice1} and {dice2}")
 
-    if dice1 == dice2:
-        player["prison"] = 0
-        player["position"] = normalize_position(player["position"] + dice1 + dice2)
-        players[index] = player
-        save_players(players)
-        print("🎉 Double rolled! You are free from jail.")
-        return dice1, dice2
+        if dice1 == dice2:
+            player["prison"] = 0
+            player["position"] = (player["position"] + dice1 + dice2) % 40
+            if player["position"] == 0:
+                player["position"] = 40
+            players[index] = player
+            save_players(players)
+            print("\n🎉 Double rolled! You are free from jail.")
+            return dice1, dice2
+        else:
+            attempts += 1
+            print(f"\n❌ Not a double. Attempt {attempts}/3")
 
+    print("\n⛔ Three failed double attempts. You must pay $50 next turn.")
     return None
+
+
 
 
 def fifty_dollar_to_pay():
@@ -96,6 +142,7 @@ def manage_prison():
         print("⛔ 3 turns passed. You must pay $50.")
         if fifty_dollar_to_pay():
             return "paid"
+        declare_bankruptcy(players, player, index)
         return "bankrupt"
 
     options = []
