@@ -56,6 +56,10 @@ def chance_card(players, player, index):
         distances = [(o - start_position) % 40 for o in options]
         new_pos = options[distances.index(min(distances))]
 
+        if new_pos == 0:
+            new_pos = 40
+
+
         player["position"] = new_pos
 
 
