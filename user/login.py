@@ -208,4 +208,3 @@ def run_login():
                             input("press any key to start the new game...")
                             os.system("cls" if os.name == "nt" else "clear")
                             return True
-

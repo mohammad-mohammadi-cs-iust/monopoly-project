@@ -49,7 +49,7 @@ def try_to_get_double(players, player, index):
 
 def fifty_dollar_to_pay(players, player, index):
     if player['money'] < 50:
-        sell_properties_to_resolve_bankrupt()
+        sell_properties_to_resolve_bankrupt(50)
     if player['money'] >= 50:
         player['money'] -= 50
         player['prison'] = 0

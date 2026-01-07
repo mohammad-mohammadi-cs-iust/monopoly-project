@@ -117,125 +117,74 @@ def sell_properties():
 def sell_properties_to_resolve_bankrupt(debt):
     players, player, player_index = get_current_player()
     assets = load_assets()
-
     username = player["username"]
-    print(f"\n💰 Current money: {player['money']}$ | Debt:{debt}$")
-    print("\nHere are your assets that you can sell:\n")
 
     user_assets = {}
-
-    total_value=0
+    total_value = 0
 
     for position, asset in assets.items():
         if asset.get("owner") == username and "buy_price" in asset:
-            buy_price = asset["buy_price"]
-            sell_price = buy_price // 2
+            sell_price = asset["buy_price"] // 2
+            house = asset.get("house_num", 0)
+            hotel = asset.get("hotel_num", 0)
 
-            if(asset.get("house_num") or asset.get("hotel_num")):
-                house=asset.get("house_num",0)
-                hotel=asset.get("hotel_num",0)
+            sell_price += (house * asset.get("house_creating", 0)) // 2
+            sell_price += (hotel * asset.get("hotel_creating", 0)) // 2
 
-                if(house > 0):
-                   sell_price+=(asset.get("house_creating")//2)*house
-
-                if(hotel==1 and house==0):
-                    sell_price+=(asset.get("hotel_creating")//2)*hotel
-            
-            total_value+=sell_price
+            total_value += sell_price
             user_assets[str(position)] = sell_price
 
-            
-            if(asset.get("house_num") or asset.get("hotel_num")):
-
-                print(
-                    f"- Position {position} | {asset['name']} | House num:{asset['house_num']} | Hotel num:{asset['hotel_num']}"
-                    f"Buy price: {buy_price}$ | Sell price: {sell_price}$"
-                )
-
-            else:
-                print(
-                    f"- Position {position} | {asset['name']} |"
-                    f"Buy price: {buy_price}$ | Sell price: {sell_price}$"
-                )
-    if(total_value+player["money"] < debt):
-        print("You can not pay the debt even if you sell of your assets. you will be Bankrupted!!")
-        return
+    if total_value + player["money"] < debt:
+        print("❌ You cannot pay the debt even if you sell all assets. BANKRUPT!")
+        return False
 
     if not user_assets:
         print("❌ No assets left to sell.")
         return False
 
+    while player["money"] < debt and user_assets:
+        print(f"\n💰 Current money: {player['money']}$ | Debt: {debt}$")
+        print("Your sellable assets:")
+        for pos, price in user_assets.items():
+            print(f"- Position {pos} | Sell price: {price}$ | Name: {assets[pos]['name']}")
 
-    while True:
-        print(f"\nCurrent Money: {player['money']}$")
-        prompt = input("Which one do you want to sell? type it's position: ").strip()
+        prompt = input("Which asset to sell? Type position or 'cancel': ").strip()
+
+        if prompt.lower() == "cancel":
+            print("❌ You chose not to sell any assets.")
+            return False
 
         if prompt not in user_assets:
-            print("The position you typed is not in your assets. Please try again.")
+            print("❌ Invalid position. Try again.")
             continue
-
 
 
         player["money"] += user_assets[prompt]
-
-        if assets[prompt]["name"] in player["assets"]:
+        if assets[prompt]["name"] in player.get("assets", []):
             player["assets"].remove(assets[prompt]["name"])
-
         assets[prompt]["owner"] = ""
-
-        if "house_num" in assets[prompt]:
-            assets[prompt]["house_num"] = 0
-
-        if "hotel_num" in assets[prompt]:
-            assets[prompt]["hotel_num"] = 0
-
-
-        players[player_index] = player
-        save_players(players)
-        save_assets(assets)
-
-        print(f"\n✔ You sold {assets[prompt]['name']} for {user_assets[prompt]}$")
+        assets[prompt]["house_num"] = 0
+        assets[prompt]["hotel_num"] = 0
 
         del user_assets[prompt]
 
-        
-        print(f"\n💰 Current money: {player['money']}$ | Debt:{debt}$")
+        save_players(players)
+        save_assets(assets)
+        print(f"✔ Sold {assets[prompt]['name']} for {player['money']}$")
 
-        if player["money"] >= debt:
-            print("\n✅ You now have enough money to pay the debt.")
-            break
-
-
-
-        while True:
-            answer=input("Do you want to continue (yes/no):").strip().lower()
-
-            if(answer=='yes' or answer=='no'):
-                break
-            else:
-                continue
-        
-        if(answer=="no"):
-            break
-
-        else:
-            continue
+    return player["money"] >= debt
 
 
 
-
-
-def resolve_bankrupt(position , dice):
+def resolve_bankrupt(position, dice):
     players, player, player_index = get_current_player()
     assets = load_assets()
 
     current_asset = assets.get(str(position))
-
     if not current_asset or "owner" not in current_asset:
         return
 
     owner_name = current_asset.get("owner")
-
     if owner_name == "" or owner_name == player["username"]:
         return
 
@@ -247,140 +196,58 @@ def resolve_bankrupt(position , dice):
             owner_index = i
             break
 
-    if not owner:
-        return
-
     rent = 0
 
     if "rent" in current_asset:
         house_num = current_asset.get("house_num", 0)
-        hotel_num= current_asset.get("hotel_num", 0)
-
-        if(hotel_num==1 and house_num==0):
-           rent = current_asset["rent"][-1]
-
-        else:
-            rent = current_asset["rent"][house_num]
-
+        hotel_num = current_asset.get("hotel_num", 0)
+        rent = current_asset["rent"][-1] if hotel_num else current_asset["rent"][house_num]
     elif "RailRoad" in current_asset["name"]:
-        railroad_count = 0
-        for asset in assets.values():
-            if asset.get("owner") == owner_name and "RailRoad" in asset.get("name"):
-                railroad_count += 1
-        rent = railroad_count * 25
-
-
-    elif "Tax" in current_asset['name']:
-        owner_name=None
-        if("Income Tax" in current_asset['name']):
-            rent=200
-
-        elif("Luxury Tax" in current_asset['name']):
-             rent=100
-
+        rent = sum(1 for a in assets.values() if a.get("owner") == owner_name and "RailRoad" in a.get("name")) * 25
+    elif "Tax" in current_asset["name"]:
+        rent = 200 if "Income Tax" in current_asset["name"] else 100
     elif current_asset["name"] in ("Water Works", "Electric Company"):
-        utility_count = 0
+        utility_count = sum(1 for a in assets.values() if a.get("owner") == owner_name and a.get("name") in ("Water Works", "Electric Company"))
+        rent = dice * 4 if utility_count == 1 else dice * 10
 
-        for asset in assets.values():
-            if asset.get("owner") == owner_name and asset.get("name") in ("Water Works", "Electric Company"):
-                utility_count += 1
-        
-        if(utility_count==1):
-           rent = dice*4
-        
-        elif(utility_count==2):
-            rent=dice*10
-
-    if(owner_name!=None):
-       print(f"\n💸 Rent required to pay to {owner_name}: {rent}$")
-
-    else:
-       print(f"\n💸 Tax required to pay is {rent}$.") 
-
-
-    while player["money"] < rent:
-        if(owner_name!=None):
-           print(f"\nYou need {rent}$ to pay rent but you have only {player['money']}$.\nConsider selling properties.")
-
-        else:
-             print(f"\nYou need {rent}$ to pay tax but you have only {player['money']}$.\nConsider selling properties.")
-
-        result=sell_properties_to_resolve_bankrupt(rent)
-
-        players, player, player_index = get_current_player()
-
-        if player["money"] >= rent:
-
-            if(owner_name!=None):
-               
-               print(f"\n💰 You now have enough money ({player['money']}$) to pay the rent.")
-
-            else:
-                print(f"\n💰 You now have enough money ({player['money']}$) to pay the tax.")
-            break
-
-        if result is False:
-            print("\n❌ No way to raise money.")
-            break
-
+    print(f"\n💸 Rent/Tax to pay: {rent}$")
 
 
     if player["money"] < rent:
-        print(f"\n☠ {player['username']} is BANKRUPT!")
+        print(f"⚠ You need {rent}$ but have only {player['money']}$")
+        result = sell_properties_to_resolve_bankrupt(rent)
+        if not result:
 
-        if(owner_name!=None):
-
+            print(f"\n☠ {player['username']} is BANKRUPT!")
             for asset in assets.values():
                 if asset.get("owner") == player["username"]:
-                    asset["owner"] = owner_name
-            
-            owner["money"] += player["money"]
-
+                    asset["owner"] = owner_name if owner_name else ""
+                    asset["house_num"] = 0
+                    asset["hotel_num"] = 0
+            if owner:
+                owner["money"] += player["money"]
+                players[owner_index] = owner
             player["money"] = 0
             player["status"] = "Bankrupt"
             player["assets"] = []
             players[player_index] = player
-            players[owner_index] = owner
+            save_players(players)
+            save_assets(assets)
+            return
 
 
-        else:
-            for asset in assets.values():
-                if asset.get("owner") == player["username"]:
-                    asset["owner"] = ""
-
-                if(asset.get('house_num') or asset.get('hotel_num')):
-                    asset['house_num']=0
-                    asset['hotel_num']=0
-            
-            player["money"] =0
-
-            player["status"] = "Bankrupt"
-            player["assets"] = []
-            players[player_index] = player
-
-        save_players(players)
-        save_assets(assets)
-        return
-    
-    if(owner_name!=None):
-
-        player["money"] -= rent
+    player["money"] -= rent
+    if owner:
         owner["money"] += rent
-
-        players[player_index] = player
         players[owner_index] = owner
 
-    else:
-        player["money"] -= rent
-        players[player_index] = player
-
-
+    players[player_index] = player
     save_players(players)
-    
-    if(owner_name!=None):
-      print(f"\n✅ {player['username']} paid {rent}$ rent to {owner_name}")
+    save_assets(assets)
 
+    if owner:
+        print(f"✅ {player['username']} paid {rent}$ rent to {owner['username']}")
     else:
-        print(f"\n✅ {player['username']} paid {rent}$ for taxes.")
+        print(f"✅ {player['username']} paid {rent}$ tax")
 
-    print(f"💰 Your new balance: {player['money']}$")
+    print(f"💰 New balance: {player['money']}$")

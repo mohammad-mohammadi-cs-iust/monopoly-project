@@ -49,6 +49,9 @@ def player_turn():
                 turn_over = True
                 continue
             if player['prison'] > 0:
+                player['prison']+=1
+                players[index]=player
+                save_players(players)
                 sell_properties()
                 build_houses_and_hotels()
                 turn_over = True
