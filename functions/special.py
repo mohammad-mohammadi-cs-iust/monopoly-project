@@ -45,6 +45,8 @@ def chance_card(players, player, index):
 
     if "move_to" in card:
         player["position"] = card["move_to"]
+        player["position"] = 40 if player["position"] == 0 else player["position"]
+
 
 
     elif "nearest" in card:
@@ -65,6 +67,8 @@ def chance_card(players, player, index):
 
     if "move_back" in card:
         player["position"] = (player["position"] - card["move_back"]) % 40
+        player["position"] = 40 if player["position"] == 0 else player["position"]
+
 
 
     if "money" in card:
@@ -117,6 +121,8 @@ def community_chest_card(players, player, index):
 
     if "move_to" in card:
         player["position"] = card["move_to"]
+        player["position"] = 40 if player["position"] == 0 else player["position"]
+
 
         if player["position"] < start_position:
             player["money"] += 200
@@ -124,6 +130,8 @@ def community_chest_card(players, player, index):
 
     if "move_back" in card:
         player["position"] = (player["position"] - card["move_back"]) % 40
+        player["position"] = 40 if player["position"] == 0 else player["position"]
+
 
 
     if "money" in card:
