@@ -103,5 +103,168 @@
             "prison": 0,
             "status": "In Progress"
         }
+    ],
+    [
+        "Over",
+        {
+            "player_number": 2,
+            "username": "Newcastle2",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "Won",
+            "total_value": 1500,
+            "land_count": 0,
+            "cash": 1500,
+            "rank": 1
+        },
+        {
+            "player_number": 3,
+            "username": "Newcastle3",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "Bankrupt",
+            "total_value": 1500,
+            "land_count": 0,
+            "cash": 1500,
+            "rank": 2
+        },
+        {
+            "player_number": 4,
+            "username": "Taylor",
+            "money": 1500,
+            "assets": [],
+            "position": 1,
+            "prison": 0,
+            "status": "Bankrupt",
+            "total_value": 1500,
+            "land_count": 0,
+            "cash": 1500,
+            "rank": 3
+        },
+        {
+            "player_number": 1,
+            "username": "Newcastle",
+            "money": 1400,
+            "assets": [
+                "Vermont Avenue"
+            ],
+            "position": 9,
+            "prison": 0,
+            "status": "Bankrupt",
+            "total_value": 1400,
+            "land_count": 0,
+            "cash": 1400,
+            "rank": 4
+        }
+    ],
+    [
+        "Cancelled",
+        {
+            "player_number": 1,
+            "username": "Taylor",
+            "money": 557,
+            "assets": [
+                "Oriental Avenue",
+                "Indiana Avenue",
+                "B&O RailRoad",
+                "Reading RailRoad",
+                "Pacific Avenue",
+                "Short Line RailRoad"
+            ],
+            "position": 19,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 2,
+            "username": "Newcastle",
+            "money": 870,
+            "assets": [
+                "Connecticut Avenue",
+                "Virginia Avenue",
+                "St. James Place",
+                "Water Works",
+                "Vermont Avenue"
+            ],
+            "position": 39,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 3,
+            "username": "Newcastle2",
+            "money": 938,
+            "assets": [
+                "Baltic Avenue",
+                "Marvin Gardens",
+                "Pennsylvania Avenue"
+            ],
+            "position": 12,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 4,
+            "username": "Newcastle4",
+            "money": 485,
+            "assets": [
+                "St.Charles Place",
+                "States Avenue",
+                "Tennessee Avenue",
+                "Park Place",
+                "New York Avenue"
+            ],
+            "position": 20,
+            "prison": 0,
+            "status": "In Progress"
+        }
+    ],
+    [
+        "Cancelled",
+        {
+            "player_number": 1,
+            "username": "Newcastle",
+            "money": 1258,
+            "assets": [
+                "Connecticut Avenue",
+                "States Avenue"
+            ],
+            "position": 18,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 2,
+            "username": "Newcastle2",
+            "money": 1470,
+            "assets": [
+                "St. James Place"
+            ],
+            "position": 17,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 3,
+            "username": "Newcastle3",
+            "money": 1492,
+            "assets": [],
+            "position": 10,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 4,
+            "username": "Newcastle4",
+            "money": 1400,
+            "assets": [],
+            "position": 6,
+            "prison": 0,
+            "status": "In Progress"
+        }
     ]
 ]

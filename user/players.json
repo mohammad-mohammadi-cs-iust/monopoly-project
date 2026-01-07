@@ -6,38 +6,55 @@
     {
         "player_number": 1,
         "username": "Newcastle",
-        "money": 1400,
+        "money": 1160,
         "assets": [
-            "Vermont Avenue"
+            "Electric Company",
+            "Tennessee Avenue",
+            "B&O RailRoad"
         ],
-        "position": 9,
+        "position": 0,
         "prison": 0,
         "status": "In Progress"
     },
     {
         "player_number": 2,
         "username": "Newcastle2",
-        "money": 1500,
-        "assets": [],
-        "position": 1,
+        "money": 1020,
+        "assets": [
+            "Oriental Avenue",
+            "States Avenue",
+            "Kentucky Avenue"
+        ],
+        "position": 25,
         "prison": 0,
         "status": "In Progress"
     },
     {
         "player_number": 3,
         "username": "Newcastle3",
-        "money": 1500,
-        "assets": [],
-        "position": 1,
+        "money": 758,
+        "assets": [
+            "Connecticut Avenue",
+            "Virginia Avenue",
+            "Illinois Avenue",
+            "Water Works",
+            "Short Line RailRoad"
+        ],
+        "position": 3,
         "prison": 0,
         "status": "In Progress"
     },
     {
         "player_number": 4,
         "username": "Taylor",
-        "money": 1500,
-        "assets": [],
-        "position": 1,
+        "money": 562,
+        "assets": [
+            "New York Avenue",
+            "Ventnor Avenue",
+            "North Carolina Avenue",
+            "St. James Place"
+        ],
+        "position": 17,
         "prison": 0,
         "status": "In Progress"
     }
