@@ -3,6 +3,7 @@ import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PLAYERS_FILE = os.path.join(BASE_DIR, "user", "players.json")
+USERS_FILE=os.path.join(BASE_DIR, "user", "users.json")
 ASSETS_FILE = os.path.join(BASE_DIR, "asset", "assets.json")
 SCOREBOARD_FILE = os.path.join(BASE_DIR, "user", "scoreboard.json")
 
@@ -51,6 +52,35 @@ def calculate_player_value(player, assets_data):
     return total_value, land_count, total_cash
 
 
+def update_users_points_by_rank(players_ranked):
+    users_data = load_json(USERS_FILE, [])
+    if not isinstance(users_data, list):
+        return
+
+    rank_points = {
+        1: 10,
+        2: 6,
+        3: 3,
+        4: 1
+    }
+
+    for player in players_ranked:
+        rank = player.get("rank")
+        username = player.get("username")
+
+        point_to_add = rank_points.get(rank, 0)
+        if point_to_add == 0:
+            continue
+
+        for user in users_data:
+            if user.get("username") == username:
+                user["point"] = user.get("point", 0) + point_to_add
+                break
+
+    save_json(USERS_FILE, users_data)
+
+
+
 def end_game_if_finished():
     data = load_json(PLAYERS_FILE, ["In Progress", {"current_turn": 1}])
     if not isinstance(data, list) or len(data) < 3:
@@ -81,6 +111,9 @@ def end_game_if_finished():
         for idx, player in enumerate(players_list, 1):
             player["rank"] = idx
 
+        update_users_points_by_rank(players_list)
+
+
         final_data = ["Over"] + players_list
 
         scoreboard_data = load_json(SCOREBOARD_FILE, [])
@@ -92,6 +125,9 @@ def end_game_if_finished():
         reset_assets()
 
         return "Game ended successfully. Returning to the menu...."
+    
+
+
 
 
 def show_leaderboard(game_index=-1):
