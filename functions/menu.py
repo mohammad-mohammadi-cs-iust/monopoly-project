@@ -15,8 +15,67 @@ from rich.text import Text
 from user.signup import run_signup
 from user.login import run_login
 from functions.loadgame import run_loadgame
-
+import json
 console = Console()
+
+USERS_FILE = os.path.join(BASE_DIR, "user", "users.json")
+
+
+def get_top_players(limit=5):
+    try:
+        with open(USERS_FILE, "r", encoding="utf-8") as f:
+            users = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+
+    if not isinstance(users, list):
+        return []
+
+    for user in users:
+        user["point"] = user.get("point", 0)
+
+    users.sort(key=lambda u: u["point"], reverse=True)
+
+    return users[:limit]
+
+
+
+def show_leaderboard():
+    clear()
+    show_title()
+
+    top_players = get_top_players()
+
+    if not top_players:
+        console.print("[bold red]No users found![/bold red]")
+        pause()
+        return
+
+    table = Table(
+        title="[bold magenta]🏆 Top Players Leaderboard[/bold magenta]",
+        header_style="bold cyan",
+        expand=True
+    )
+
+    table.add_column("Rank", justify="center")
+    table.add_column("Username", justify="center")
+    table.add_column("Email", justify="center")
+    table.add_column("Points", justify="center")
+
+    for idx, user in enumerate(top_players, start=1):
+        point = user.get("point", 0)
+
+        point_style = "green" if point > 0 else "dim"
+        table.add_row(
+            str(idx),
+            user.get("username", "-"),
+            user.get("email", "-"),
+            f"[{point_style}]{point}[/{point_style}]"
+        )
+
+    console.print(table)
+    pause()
+
 
 
 def clear():
@@ -128,8 +187,7 @@ def run_menu():
                 return True
 
         elif choice == "3":
-            console.print("\n[bold magenta]Leaderboard[/bold magenta]")
-            pause()
+            show_leaderboard()
 
         elif choice == "4":
             console.print("\n[bold red]Exiting Game...[/bold red]")
