@@ -49,11 +49,29 @@ def player_turn():
             if prison_result == "rolled":
                 dest_block = get_current_block(player)
 
+                print(f"\nYou will land on: {dest_block['name']}")
+
+
                 if dest_block and dest_block.get('name') in ['Chance', 'Community Chest']:
                     if dest_block['name'] == 'Chance':
                         chance_card(players, player, index)
+                        ownership()
+                        resolve_bankrupt(player['position'], 0)
+
+                        players, player, index = get_current_player()
+                        if player['status'] == "Bankrupt":
+                            turn_over = True
+                            continue
+                        
                     else:
                         community_chest_card(players, player, index)
+                        ownership()
+                        resolve_bankrupt(player['position'], 0)
+
+                        players, player, index = get_current_player()
+                        if player['status'] == "Bankrupt":
+                            turn_over = True
+                            continue
 
                 elif dest_block and 'buy_price' in dest_block and dest_block.get('owner', '') == "":
                     ownership()
@@ -61,20 +79,35 @@ def player_turn():
                 elif dest_block and dest_block.get('owner', '') not in ("", player['username']):
                     resolve_bankrupt(player['position'], 0)
 
+                    players, player, index = get_current_player()
+                    if player['status'] == "Bankrupt":
+                        turn_over = True
+                        continue
+
                 elif dest_block and dest_block.get('name') in ['Income Tax', 'Luxury Tax']:
                     amount = dest_block.get('amount', 0)
                     if player['money'] >= amount:
                         player['money'] -= amount
+
+                        print(f"\n {amount}$ paid as "+dest_block['name'])
                         players[index] = player
                         save_players(players)
                     else:
+                        print(f"\n You don't have enough money to pay {amount}$ as "+dest_block['name']+"\n")
                         resolve_bankrupt(player['position'], 0)
+
+                        players, player, index = get_current_player()
+                        if player['status'] == "Bankrupt":
+                            turn_over = True
+                            continue
 
                 elif dest_block and dest_block.get('name') == 'Go To Jail':
                     go_to_jail(players, player, index)
 
                 build_houses_and_hotels()
                 sell_properties()
+
+                
                 turn_over = True
                 continue
 
@@ -140,6 +173,13 @@ def player_turn():
                         ownership()
                     elif dest_block and 'owner' in dest_block and dest_block.get('owner','') not in ("", player['username']):
                         resolve_bankrupt(player['position'], total_dice)
+
+                        players, player, index = get_current_player()
+                        if player['status'] == "Bankrupt":
+                            turn_over = True
+                            continue
+
+
                     elif dest_block and dest_block.get('name') in ['Income Tax', 'Luxury Tax']:
                         amount = dest_block.get('amount', 0)
                         if player['money'] >= amount:
@@ -150,6 +190,11 @@ def player_turn():
                             save_players(players)
                         else:
                             resolve_bankrupt(player['position'], total_dice)
+
+                            players, player, index = get_current_player()
+                            if player['status'] == "Bankrupt":
+                                turn_over = True
+                                continue
                     elif dest_block and dest_block.get('name') == 'Go To Jail':
                         go_to_jail(players, player, index)
 
@@ -158,6 +203,11 @@ def player_turn():
                     ownership()
                 elif dest_block and 'owner' in dest_block and dest_block.get('owner','') not in ("", player['username']):
                     resolve_bankrupt(player['position'], total_dice)
+
+                    players, player, index = get_current_player()
+                    if player['status'] == "Bankrupt":
+                        turn_over = True
+                        continue
                 elif dest_block and dest_block.get('name') in ['Income Tax', 'Luxury Tax']:
                     amount = dest_block.get('amount', 0)
                     if player['money'] >= amount:
@@ -166,6 +216,12 @@ def player_turn():
                         save_players(players)
                     else:
                         resolve_bankrupt(player['position'], total_dice)
+
+                        players, player, index = get_current_player()
+                        if player['status'] == "Bankrupt":
+                            turn_over = True
+                            continue
+
                 elif dest_block and dest_block.get('name') == 'Go To Jail':
                     go_to_jail(players, player, index)
 
@@ -182,14 +238,17 @@ def player_turn():
 
                     input("Press Enter to roll the dice again...")
                 else:
-                    print("\n Because you had 3 doubles you are going to the Jail on block 31..")
+                    print("\n Because you had 3 doubles you are going to the Jail on block 11..")
                     players, player, index = get_current_player()
                     player['prison'] = 1
                     player['position'] = 11
                     repeat_dice = 0
                     players[index] = player
                     save_players(players)
-                    turn_over = True
+                    if player['status'] == "Bankrupt":
+                        turn_over = True
+                    else:
+                        turn_over = True
             else:
                 repeat_dice = 0
                 turn_over = True

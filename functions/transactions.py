@@ -148,8 +148,14 @@ def build_houses_and_hotels():
             houses = block.get("house_num", 0)
             hotel = block.get("hotel_num", 0)
             print(f"- {block['name']}: House number={houses}, Hotel number={hotel}, House price={block.get('house_creating')}, Hotel price={block.get('hotel_creating')}\n")
+        
+        break_color = False
 
         while True:
+            if break_color:
+                break_color = False
+                continue
+
             assets = load_assets()
             full_ownership, blocks = can_build_on_color(color)
             if not blocks:
@@ -188,6 +194,7 @@ def build_houses_and_hotels():
                 cost = selected.get("house_creating", 50)
                 if player["money"] < cost:
                     print("Not enough money to build a house.\n")
+                    break_color = True
                     break
                 player["money"] -= cost
                 selected["house_num"] = selected.get("house_num", 0) + 1
@@ -214,6 +221,7 @@ def build_houses_and_hotels():
                 cost = selected.get("hotel_creating", 200)
                 if player["money"] < cost:
                     print("\nNot enough money to build a hotel.")
+                    break_color = True
                     break
                 player["money"] -= cost
                 selected["hotel_num"] = 1
