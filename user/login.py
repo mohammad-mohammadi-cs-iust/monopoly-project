@@ -138,7 +138,6 @@ def header_box(text, width=32):
     print("*" * width)
 
 
-#check if there is at least for 4 players in users.json
 def run_login():
 
 
@@ -152,14 +151,11 @@ def run_login():
 
     else:
         players_path = os.path.join(BASE_DIR, "players.json")
-        #load previous users
         player_initial=load_users(players_path)
 
-        # reset players.json at game start
         with open(players_path, "w", encoding="utf-8") as f:
             json.dump([], f, indent=4, ensure_ascii=False)
 
-            #run the programm
         while logged_in_player != 5:
                 header_box("Player " + str(logged_in_player))
 
