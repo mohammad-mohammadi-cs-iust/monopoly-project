@@ -1,0 +1,59 @@
+[
+    [
+        "Over",
+        {
+            "player_number": 1,
+            "username": "Taylor",
+            "money": 1651,
+            "assets": [
+                "St.Charles Place"
+            ],
+            "position": 28,
+            "prison": 0,
+            "status": "Won",
+            "total_value": 1651,
+            "land_count": 0,
+            "cash": 1651,
+            "rank": 1
+        },
+        {
+            "player_number": 3,
+            "username": "Newcastle2",
+            "money": 10,
+            "assets": [],
+            "position": 22,
+            "prison": 0,
+            "status": "Bankrupt",
+            "total_value": 10,
+            "land_count": 0,
+            "cash": 10,
+            "rank": 2
+        },
+        {
+            "player_number": 2,
+            "username": "Newcastle",
+            "money": 0,
+            "assets": [],
+            "position": 12,
+            "prison": 0,
+            "status": "Bankrupt",
+            "total_value": 0,
+            "land_count": 0,
+            "cash": 0,
+            "rank": 3
+        },
+        {
+            "player_number": 4,
+            "username": "Newcastle3",
+            "money": 0,
+            "assets": [],
+            "position": 18,
+            "prison": 0,
+            "status": "Bankrupt",
+            "total_value": 0,
+            "land_count": 0,
+            "cash": 0,
+            "rank": 4
+        }
+    ]
+]
