@@ -13,7 +13,7 @@
             160,
             250
         ],
-        "owner": "Taylor",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -31,7 +31,7 @@
             320,
             450
         ],
-        "owner": "Newcastle3",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -49,7 +49,7 @@
             400,
             550
         ],
-        "owner": "Newcastle3",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -67,7 +67,7 @@
             400,
             550
         ],
-        "owner": "Newcastle2",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -85,7 +85,7 @@
             450,
             600
         ],
-        "owner": "Taylor",
+        "owner": "Newcastle",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -103,7 +103,7 @@
             625,
             750
         ],
-        "owner": "Newcastle2",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -121,7 +121,7 @@
             625,
             750
         ],
-        "owner": "Taylor",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -139,7 +139,7 @@
             700,
             900
         ],
-        "owner": "Newcastle2",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -157,7 +157,7 @@
             750,
             950
         ],
-        "owner": "Newcastle3",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -175,7 +175,7 @@
             750,
             950
         ],
-        "owner": "Newcastle3",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -193,7 +193,7 @@
             800,
             1000
         ],
-        "owner": "Taylor",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -211,7 +211,7 @@
             875,
             1050
         ],
-        "owner": "Taylor",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -229,7 +229,7 @@
             875,
             1050
         ],
-        "owner": "Newcastle",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -247,7 +247,7 @@
             925,
             1100
         ],
-        "owner": "Newcastle",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -265,7 +265,7 @@
             975,
             1150
         ],
-        "owner": "Newcastle",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -283,7 +283,7 @@
             975,
             1150
         ],
-        "owner": "Newcastle2",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -301,7 +301,7 @@
             1025,
             1200
         ],
-        "owner": "Newcastle3",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -319,7 +319,7 @@
             1100,
             1275
         ],
-        "owner": "Newcastle",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -337,7 +337,7 @@
             1100,
             1275
         ],
-        "owner": "Newcastle3",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -355,7 +355,7 @@
             1200,
             1400
         ],
-        "owner": "Taylor",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -373,7 +373,7 @@
             1300,
             1500
         ],
-        "owner": "Newcastle3",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
@@ -391,43 +391,45 @@
             1700,
             2000
         ],
-        "owner": "Newcastle2",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
     "6": {
         "name": "Reading RailRoad",
         "buy_price": 200,
-        "owner": "Newcastle",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
     "16": {
         "name": "Pennsylvania RailRoad",
         "buy_price": 200,
-        "owner": "Taylor"
+        "owner": ""
     },
     "26": {
         "name": "B&O RailRoad",
         "buy_price": 200,
-        "owner": "Newcastle2"
+        "owner": ""
     },
     "36": {
         "name": "Short Line RailRoad",
         "buy_price": 200,
-        "owner": "Newcastle3"
+        "owner": "",
+        "house_num": 0,
+        "hotel_num": 0
     },
     "13": {
         "name": "Electric Company",
         "buy_price": 150,
-        "owner": "Taylor",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },
     "29": {
         "name": "Water Works",
         "buy_price": 150,
-        "owner": "Taylor",
+        "owner": "",
         "house_num": 0,
         "hotel_num": 0
     },

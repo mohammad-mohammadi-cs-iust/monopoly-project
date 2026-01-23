@@ -55,5 +55,76 @@
             "cash": 0,
             "rank": 4
         }
+    ],
+    [
+        "Cancelled",
+        {
+            "player_number": 1,
+            "username": "Taylor",
+            "money": 1665,
+            "assets": [
+                "Connecticut Avenue",
+                "Pennsylvania RailRoad",
+                "Water Works",
+                "Pennsylvania Avenue",
+                "States Avenue",
+                "New York Avenue",
+                "Mediterranean Avenue",
+                "Electric Company",
+                "Kentucky Avenue"
+            ],
+            "position": 24,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 2,
+            "username": "Newcastle",
+            "money": 1660,
+            "assets": [
+                "Reading RailRoad",
+                "Atlantic Avenue",
+                "Pacific Avenue",
+                "Illinois Avenue",
+                "Indiana Avenue",
+                "St. James Place"
+            ],
+            "position": 28,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 3,
+            "username": "Newcastle2",
+            "money": 1996,
+            "assets": [
+                "St.Charles Place",
+                "Ventnor Avenue",
+                "Boardwalk",
+                "B&O RailRoad",
+                "Vermont Avenue",
+                "Virginia Avenue"
+            ],
+            "position": 26,
+            "prison": 0,
+            "status": "In Progress"
+        },
+        {
+            "player_number": 4,
+            "username": "Newcastle3",
+            "money": 1274,
+            "assets": [
+                "Tennessee Avenue",
+                "North Carolina Avenue",
+                "Park Place",
+                "Oriental Avenue",
+                "Baltic Avenue",
+                "Marvin Gardens",
+                "Short Line RailRoad"
+            ],
+            "position": 4,
+            "prison": 0,
+            "status": "In Progress"
+        }
     ]
 ]
