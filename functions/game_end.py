@@ -42,11 +42,16 @@ def calculate_player_value(player, assets_data):
     total_assets_value = 0
     land_count = 0
 
-    for asset_key in player.get("assets", []):
-        asset = assets_data.get(str(asset_key))
-        if asset and "color" in asset:
-            total_assets_value += asset.get("buy_price", 0)
-            land_count += 1
+    for asset_name in player.get("assets", []):
+        
+        for position,asset_info in assets_data.items():
+
+            if(asset_info['name']==asset_name):
+                asset = assets_data.get(str(position))
+
+                if asset and "color" in asset:
+                    total_assets_value += asset.get("buy_price", 0)
+                    land_count += 1
 
     total_value = total_cash + total_assets_value
     return total_value, land_count, total_cash
