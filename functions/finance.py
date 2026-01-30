@@ -193,7 +193,7 @@ def sell_properties_to_resolve_bankrupt(players, player, player_index, debt, own
 
         if assets[prompt]["name"] in player.get("assets", []):
             player["assets"].remove(assets[prompt]["name"])
-        assets[prompt]["owner"] = owner["username"] if owner else ""
+        assets[prompt]["owner"] =""
         assets[prompt]["house_num"] = 0
         assets[prompt]["hotel_num"] = 0
 
