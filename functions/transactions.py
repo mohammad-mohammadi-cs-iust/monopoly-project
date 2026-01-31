@@ -212,9 +212,19 @@ def build_houses_and_hotels():
                 break
 
             elif build_choice == "hotel":
-                if selected.get("house_num", 0) < 4:
-                    print("\nYou need 4 houses first to build a hotel.")
+
+                if any((b.get("house_num", 0) < 4 and b.get("hotel_num", 0) == 0) for b in blocks):
+                    print("\nAll properties in this color must have 4 houses before building a hotel.")
                     continue
+
+
+                hotel_counts = [b.get("hotel_num", 0) for b in blocks]
+                min_hotels = min(hotel_counts)
+
+                if selected.get("hotel_num", 0) > min_hotels:
+                    print("\nYou must build hotels evenly across the color set.")
+                    continue
+
                 if selected.get("hotel_num", 0) == 1:
                     print("\nThis property already has a hotel.")
                     continue
